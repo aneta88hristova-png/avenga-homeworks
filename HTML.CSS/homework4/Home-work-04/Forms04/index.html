@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dado Tea Lunch Special</title>
+  </head>
+  <body>
+    <fieldset>
+      <h1>Dado Tea <strong>Lunch</strong> Special</h1>
+
+      <p>
+        Monday through Friday<br /><!--Овој таг кога го зачувувам се менува сам од <br> во <br /> и не знам зошто :)-->
+        11am — 3pm<br />
+        $9.50 plus ta
+      </p>
+      <p>Includes sandwich, snack, and drink.</p>
+
+      <!-- Text and Radio Form-->
+      <fieldset>
+        <legend>Order Information</legend>
+        <p><b>Name</b></p>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          id="name"
+          name="name"
+          size="30"
+        /><br /><br />
+        <input type="radio" id="here" name="order_type" />
+        <label for="here">Here</label><br />
+        <input type="radio" id="to_go" name="order_type" />
+        <label for="to_go">To Go</label>
+      </fieldset>
+
+      <!-- Checkbox Form -->
+      <fieldset>
+        <legend>Sandwiches</legend>
+        <h4>Monday</h4>
+        <input type="checkbox" id="monday1" name="monday_sandwich" />
+        <label for="monday1">Tomato Mozzarella</label><br />
+        <input type="checkbox" id="monday2" name="monday_sandwich" />
+        <label for="monday2">Chicken Salad</label>
+
+        <h4>Tuesday</h4>
+        <input type="checkbox" id="tuesday1" name="tuesday_sandwich" />
+        <label for="tuesday1">Greek Salad Wrap</label><br />
+        <input type="checkbox" id="tuesday2" name="tuesday_sandwich" />
+        <label for="tuesday2">Tomato Wrap</label>
+
+        <h4>Wednesday</h4>
+        <input type="checkbox" id="wednesday1" name="wednesday_sandwich" />
+        <label for="wednesday1">Red Pepper Hummus</label><br />
+        <input type="checkbox" id="wednesday2" name="wednesday_sandwich" />
+        <label for="wednesday2">Roasted Turkey</label>
+
+        <h4>Thursday</h4>
+        <input type="checkbox" id="thursday1" name="thursday_sandwich" />
+        <label for="thursday1">Carrot Ginger Hummus Wrap</label><br />
+        <input type="checkbox" id="thursday2" name="thursday_sandwich" />
+        <label for="thursday2">Egg Salad</label>
+
+        <h4>Friday</h4>
+        <input type="checkbox" id="friday1" name="friday_sandwich" />
+        <label for="friday1">Dado Wrap</label><br />
+        <input type="checkbox" id="friday2" name="friday_sandwich" />
+        <label for="friday2">Tuna Salad</label>
+
+        <hr />
+        <p>
+          <input type="checkbox" id="gluten_free" />
+          <label for="gluten_free">Gluten Free Bread (75¢ extra)</label>
+        </p>
+      </fieldset>
+
+      <!-- Checkbox Form -->
+      <fieldset>
+        <legend>Snacks</legend>
+        <b>Snacks</b><br />
+        <input type="checkbox" id="apple" name="snack" />
+        <label for="apple">Apple</label><br />
+        <input type="checkbox" id="banana" name="snack" />
+        <label for="banana">Banana</label><br />
+        <input type="checkbox" id="chips" name="snack" />
+        <label for="chips">Pita Chips</label>
+      </fieldset>
+
+      <!-- Selekt and Checkbox Form -->
+      <fieldset>
+        <legend>Drink</legend>
+        <b>Drinks</b><br />
+        <select id="drink" name="drink">
+          <option value="">-- Choose Your Drink --</option>
+          <optgroup label="Hot Teas">
+            <option value="earl_grey">Earl Grey</option>
+            <option value="english_breakfast">English Breakfast</option>
+            <option value="chamomile">Chamomile</option>
+            <option value="green_tea">Green Tea</option>
+            <option value="peppermint">Peppermint</option>
+          </optgroup>
+          <optgroup label="Other Drinks">
+            <option value="coffee">Coffee</option>
+            <option value="lemonade">Lemonade</option>
+            <option value="soda">Soda</option>
+            <option value="water">Water</option>
+          </optgroup>
+        </select>
+
+        <hr />
+        <p>
+          <input type="checkbox" id="large_drink" />
+          <label for="large_drink">Large drink (75¢ extra)</label>
+        </p>
+      </fieldset>
+      <!--SubmiForm--->
+      <p><input type="submit" value="Place Order" /></p>
+    </fieldset>
+  </body>
+</html>
