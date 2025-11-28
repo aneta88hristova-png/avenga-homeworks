@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Microorganisms in Food</title>
+    <link rel="icon" type="image/png" href="./img-micro/micro.webp" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Microorganisms in Food</h1>
+        <p>
+          Understanding the role of microbes in food production, preservation,
+          and safety
+        </p>
+      </header>
+
+      <nav>
+        <ul>
+          <li><a href="#beneficial">Beneficial Microbes</a></li>
+          <li><a href="#harmful">Harmful Microbes</a></li>
+          <li><a href="#preservation">Food Preservation</a></li>
+          <li><a href="#safety">Food Safety</a></li>
+        </ul>
+      </nav>
+
+      <main>
+        <section id="introduction">
+          <h2>Introduction to Food Microbiology</h2>
+          <p>
+            Microorganisms play a crucial role in the food industry. While some
+            microbes are essential for producing foods like yogurt, cheese, and
+            bread, others can cause food spoilage or foodborne illnesses.
+          </p>
+          <p>
+            Understanding these tiny organisms helps us produce safer,
+            longer-lasting, and more diverse food products.
+          </p>
+        </section>
+
+        <section id="beneficial">
+          <h2>Beneficial Microorganisms</h2>
+
+          <div class="microorganism-card">
+            <h3><a href="./bact/Lactobaccilus/index.html">Lactobacillus</a></h3>
+            <p>
+              Used in the production of yogurt, sauerkraut, pickles, and other
+              fermented foods. Converts sugars into lactic acid, which acts as a
+              natural preservative.
+            </p>
+            <p>
+              <img
+                src="./img-micro/lactobacillus.webp"
+                alt="Lactobacillus bacteria under microscope"
+                width="100%"
+              />
+            </p>
+          </div>
+
+          <div class="microorganism-card">
+            <h3>
+              <a href="./bact/Saccharomyces/index.html"
+                >Saccharomyces cerevisiae</a
+              >
+            </h3>
+            <p>
+              Commonly known as baker's yeast, this fungus is essential for
+              bread making and alcoholic fermentation.
+            </p>
+            <p>
+              <img
+                src="./img-micro/saccharomyces.webp"
+                alt="Saccharomyces cerevisiae yeast cells"
+                width="100%"
+              />
+            </p>
+          </div>
+
+          <div class="microorganism-card">
+            <h3><a href="./bact/Penicillium/index.html">Penicillium</a></h3>
+            <p>
+              Certain species are used in cheese production, such as Penicillium
+              roqueforti in blue cheese and Penicillium camemberti in Camembert.
+            </p>
+            <p>
+              <img
+                src="./img-micro/penicillium.webp"
+                alt="Penicillium"
+                width="100%"
+              />
+            </p>
+          </div>
+        </section>
+
+        <section id="harmful">
+          <h2>Harmful Microorganisms</h2>
+          <p>
+            Some microorganisms can cause food spoilage or foodborne illnesses:
+          </p>
+
+          <ul>
+            <li>
+              <strong>Salmonella:</strong> Found in raw poultry, eggs, and
+              unpasteurized milk
+            </li>
+            <li>
+              <strong>E. coli:</strong> Can contaminate undercooked beef and raw
+              vegetables
+            </li>
+            <li>
+              <strong>Listeria:</strong> Can grow in refrigerated ready-to-eat
+              foods
+            </li>
+            <li>
+              <strong>Botulinum:</strong> Produces toxins in improperly canned
+              foods
+            </li>
+          </ul>
+        </section>
+
+        <section id="preservation">
+          <h2>Food Preservation Methods</h2>
+          <p>
+            Various techniques are used to control microbial growth in food:
+          </p>
+
+          <ol>
+            <li>Refrigeration and freezing</li>
+            <li>Canning and bottling</li>
+            <li>Drying and dehydration</li>
+            <li>Salting and sugaring</li>
+            <li>Fermentation</li>
+            <li>Pasteurization</li>
+          </ol>
+        </section>
+      </main>
+
+      <aside>
+        <section class="aside-section" id="survey-section">
+          <h2>Food Safety Survey</h2>
+          <form id="food-safety-form">
+            <div class="form-group">
+              <label for="food-type">
+                Which food category are you most interested in?</label
+              >
+              <select id="food-type" name="food-type">
+                <option value="">Select an option</option>
+                <option value="dairy">Dairy Products</option>
+                <option value="meat">Meat and Poultry</option>
+                <option value="vegetables">Fruits and Vegetables</option>
+                <option value="grains">Grains and Cereals</option>
+                <option value="fermented">Fermented Foods</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>How concerned are you about foodborne illnesses?</label>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="concern-low"
+                    name="concern-level"
+                    value="low"
+                  />
+                  <label for="concern-low">Not very concerned</label>
+                </div>
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="concern-medium"
+                    name="concern-level"
+                    value="medium"
+                  />
+                  <label for="concern-medium">Somewhat concerned</label>
+                </div>
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="concern-high"
+                    name="concern-level"
+                    value="high"
+                  />
+                  <label for="concern-high">Very concerned</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label
+                >Which food preservation methods do you use? (Select all that
+                apply)</label
+              >
+              <div class="checkbox-group">
+                <div class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    id="method-refrigeration"
+                    name="preservation-methods"
+                    value="refrigeration"
+                  />
+                  <label for="method-refrigeration">Refrigeration</label>
+                </div>
+                <div class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    id="method-freezing"
+                    name="preservation-methods"
+                    value="freezing"
+                  />
+                  <label for="method-freezing">Freezing</label>
+                </div>
+                <div class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    id="method-canning"
+                    name="preservation-methods"
+                    value="canning"
+                  />
+                  <label for="method-canning">Canning</label>
+                </div>
+                <div class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    id="method-drying"
+                    name="preservation-methods"
+                    value="drying"
+                  />
+                  <label for="method-drying">Drying</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="comments"
+                >Any questions about microorganisms in food?</label
+              >
+              <input
+                type="text"
+                id="comments"
+                name="comments"
+                placeholder="Enter your questions here..."
+              />
+            </div>
+
+            <button type="submit">Submit Survey</button>
+          </form>
+        </section>
+        <section class="aside-section" id="video-section">
+          <div class="video-container">
+            <div class="video-responsive">
+              <iframe
+                width="300"
+                height="169"
+                src="https://www.youtube.com/embed/5CEb60Rfp14"
+                title="NIVEA commercial"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <div class="video-responsive">
+              <iframe
+                width="300"
+                height="169"
+                src="https://www.youtube.com/embed/TQbjEIqEM3Y"
+                title="IKEA commercial"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <footer>
+        <p>
+          &copy; 2023 Food Microbiology Education | For educational purposes
+          only
+        </p>
+        <p>
+          <a href="mailto:info@foodmicrobiology.edu">Send Email</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
