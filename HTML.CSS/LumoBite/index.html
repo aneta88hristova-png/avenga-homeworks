@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LumoBite - Healthy Snacks That Keep You Glowing</title>
+    <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,52 +15,57 @@
   </head>
   <body>
     <!-- Header / Navigation -->
-    <header>
-      <div class="container header-container">
-        <div class="logo">LumoBite</div>
-        <nav>
-          <ul>
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <div class="logo">
+            <h1>LumoBite</h1>
+          </div>
+
+          <ul class="nav-links">
             <li><a href="#products">Products</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+
+          <a href="#shop" class="btn-shop">Shop Now</a>
         </nav>
-        <a href="#shop" class="btn btn-primary">Shop Now</a>
       </div>
     </header>
-
     <!-- Hero Section -->
     <section class="hero">
-      <div class="container hero-container">
-        <div class="hero-text">
-          <div class="label">NEW • HEALTHY • TASTY</div>
-          <h1>Healthy snacks that keep you glowing.</h1>
-          <p>
-            LumoBite brings you plant-based, low-sugar snacks for busy people
-            who care about what they eat.
-          </p>
-          <div class="hero-buttons">
-            <a href="#get-started" class="btn btn-primary">Get Started</a>
-            <a href="#flavors" class="btn btn-outline">View Flavors</a>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <span class="hero-label">NEW • HEALTHY • TASTY</span>
+            <h2 class="hero-title">Healthy snacks that keep you glowing.</h2>
+            <p class="hero-description">
+              LumoBite brings you plant-based, low-sugar snacks for busy people
+              who care about what they eat.
+            </p>
+            <div class="hero-buttons">
+              <a href="#start" class="btn btn-primary">Get Started</a>
+              <a href="#flavors" class="btn btn-outline">View Flavors</a>
+            </div>
           </div>
-        </div>
-        <div class="hero-image">
-          <div class="image-placeholder">Snack Image Placeholder</div>
+          <div class="hero-image">
+            <div class="image-placeholder">Snack Image Placeholder</div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Benefits Section -->
-    <section class="benefits">
+    <section class="benefits" id="about">
       <div class="container">
-        <h2>Why LumoBite?</h2>
+        <h2 class="section-title">Why LumoBite?</h2>
         <div class="benefits-grid">
           <div class="benefit-card">
             <div class="benefit-icon">
               <i class="fas fa-leaf"></i>
             </div>
-            <h3>Clean Ingredients</h3>
-            <p>
+            <h3 class="benefit-title">Clean Ingredients</h3>
+            <p class="benefit-text">
               No artificial colors, flavors, or preservatives — just real food.
             </p>
           </div>
@@ -67,99 +73,82 @@
             <div class="benefit-icon">
               <i class="fas fa-bolt"></i>
             </div>
-            <h3>Energy Without Crash</h3>
-            <p>Balanced macros to keep you focused, not sleepy.</p>
+            <h3 class="benefit-title">Energy Without Crash</h3>
+            <p class="benefit-text">
+              Balanced macros to keep you focused, not sleepy.
+            </p>
           </div>
           <div class="benefit-card">
             <div class="benefit-icon">
               <i class="fas fa-globe-americas"></i>
             </div>
-            <h3>Eco-Friendly</h3>
-            <p>Sustainably sourced packaging and ingredients.</p>
+            <h3 class="benefit-title">Eco-Friendly</h3>
+            <p class="benefit-text">
+              Sustainably sourced packaging and ingredients.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Products Grid -->
+    <!-- Products Section -->
     <section class="products" id="products">
       <div class="container">
-        <h2>Popular Packs</h2>
+        <h2 class="section-title">Popular Packs</h2>
         <div class="products-grid">
           <div class="product-card">
-            <div class="product-image" style="background-color: #ffe8e4">
-              Citrus Glow Mix
-            </div>
-            <div class="product-content">
-              <div class="badge badge-bestseller">BESTSELLER</div>
-              <h3>Citrus Glow Mix</h3>
-              <p class="product-description">12 snack bars • 100% vegan</p>
-            </div>
+            <div class="product-badge bestseller">BESTSELLER</div>
+            <h3 class="product-title">Citrus Glow Mix</h3>
+            <p class="product-description">12 snack bars • 100% vegan</p>
           </div>
           <div class="product-card">
-            <div class="product-image" style="background-color: #f0e6ff">
-              Midnight Cocoa Crunch
-            </div>
-            <div class="product-content">
-              <div class="badge badge-new">NEW</div>
-              <h3>Midnight Cocoa Crunch</h3>
-              <p class="product-description">12 snack bars • 100% vegan</p>
-            </div>
+            <div class="product-badge new">NEW</div>
+            <h3 class="product-title">Midnight Cocoa Crunch</h3>
+            <p class="product-description">12 snack bars • 100% vegan</p>
           </div>
           <div class="product-card">
-            <div class="product-image" style="background-color: #e4f7e9">
-              Berry Beam Bites
-            </div>
-            <div class="product-content">
-              <div class="badge badge-limited">LIMITED</div>
-              <h3>Berry Beam Bites</h3>
-              <p class="product-description">12 snack bars • 100% vegan</p>
-            </div>
+            <div class="product-badge limited">LIMITED</div>
+            <h3 class="product-title">Berry Beam Bites</h3>
+            <p class="product-description">12 snack bars • 100% vegan</p>
           </div>
           <div class="product-card">
-            <div class="product-image" style="background-color: #e8f4ff">
-              Tropical Pulse Pack
-            </div>
-            <div class="product-content">
-              <div class="badge badge-classic">CLASSIC</div>
-              <h3>Tropical Pulse Pack</h3>
-              <p class="product-description">12 snack bars • 100% vegan</p>
-            </div>
+            <div class="product-badge classic">CLASSIC</div>
+            <h3 class="product-title">Tropical Pulse Pack</h3>
+            <p class="product-description">12 snack bars • 100% vegan</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Testimonial Section -->
-    <section class="testimonial-section">
+    <section class="testimonial">
       <div class="container">
-        <h2>What our customers say</h2>
-        <div class="testimonial">
-          <p>
+        <div class="testimonial-box">
+          <h2 class="section-title">What our customers say</h2>
+          <blockquote class="testimonial-quote">
             "LumoBite snacks finally fixed my 4pm energy crash. I keep a box on
             my desk at all times."
-          </p>
-          <div class="customer-name">— Ana, UX Designer</div>
+          </blockquote>
+          <p class="testimonial-author">— Ana, UX Designer</p>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer" id="contact">
       <div class="container">
-        <div class="footer-container">
-          <div class="footer-logo">© 2025 LumoBite. All rights reserved.</div>
+        <div class="footer-content">
+          <div class="footer-copyright">
+            <p>© 2025 LumoBite. All rights reserved.</p>
+          </div>
           <div class="footer-links">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms</a>
-            <a href="#instagram"
-              >Instagram
-              <span class="social-icon"><i class="fab fa-instagram"></i></span
-            ></a>
+            <a href="#instagram" class="social-link">
+              <i class="fab fa-instagram"></i>
+              <span class="instagram-text">Instagram</span>
+            </a>
           </div>
-        </div>
-        <div class="copyright">
-          <p>Healthy snacks that keep you glowing.</p>
         </div>
       </div>
     </footer>
