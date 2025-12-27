@@ -114,11 +114,11 @@ h3 {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 20px;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: 3rem; /* x16px=48px*/
   margin-bottom: 20px;
   color: #1f1f2b; /* Dark Text */
 }
@@ -136,7 +136,7 @@ h3 {
 }
 
 .btn {
-  display: inline-block;
+  display:  inline-block;
   padding: 15px 30px;
   border-radius: 30px;
   text-decoration: none;
@@ -322,7 +322,7 @@ h3 {
   position: relative;
 }
 
-/* Decorative detail - subtle accent corners */
+
 .testimonial-box::before {
   content: "";
   position: absolute;
@@ -501,6 +501,7 @@ h3 {
   /* Header - Stack vertically: Logo on top, Navigation under, Button at bottom */
   .header {
     padding: 25px 0 20px;
+    position: static;
   }
 
   .navbar {
