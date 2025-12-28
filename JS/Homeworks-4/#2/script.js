@@ -3,23 +3,6 @@ function validateNumber(num) {
 }
 
 function sumArray(numbers) {
-  // Check if we have exactly 5 numbers
-  if (numbers.length !== 5) {
-    alert(
-      `Error: Need exactly 5 numbers, but you entered ${numbers.length} numbers.`
-    );
-    return null;
-  }
-
-  // Ceck if all are valid numbers
-  for (let i = 0; i < numbers.length; i++) {
-    if (!validateNumber(numbers[i])) {
-      alert(
-        `Error: "${numbers[i]}" at position ${i + 1} is not a valid number!`
-      );
-      return null;
-    }
-  }
 
   let sum = 0;
   for (let i = 0; i < numbers.length; i++) {
@@ -40,6 +23,23 @@ function getAndCalculate() {
   // Check if user clicked Cancel
   if (input === null) {
     alert("You cancelled the input.");
+    return;
+  }
+
+  // Check if input is empty
+  if (input.trim() === "") {
+    alert("Please enter 5 numbers!");
+    return;
+  }
+
+  // Split the input into items
+  const items = input.split(",");
+
+  // Check count of items
+  if (items.length !== 5) {
+    alert(
+      `Error: Need exactly 5 numbers, but you entered ${items.length} numbers.`
+    );
     return;
   }
 
