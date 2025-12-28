@@ -43,21 +43,6 @@ function getAndCalculate() {
     return;
   }
 
-  // Check if input is empty
-  if (input.trim() === "") {
-    alert("Please enter 5 numbers!");
-    return;
-  }
-
-  // Check count of items
-  const items = input.split(",");
-  if (items.length !== 5) {
-    alert(
-      `Error: Need exactly 5 numbers, but you entered ${items.length} numbers.`
-    );
-    return;
-  }
-
   // Check for empty entries
   for (let i = 0; i < items.length; i++) {
     if (items[i].trim() === "") {
@@ -75,7 +60,6 @@ function getAndCalculate() {
     const trimmed = item.trim();
     return Number(trimmed);
   });
-
 
   sumArray(numbers);
 }
