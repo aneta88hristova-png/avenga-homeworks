@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recipe Creator - HTML Elements</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+   
+    <h1>Recipe Creator</h1>
+
+    <button id="startButton">Create New Recipe</button>
+
+    <div id="recipeDisplay" class="hidden">
+      <h2 id="recipeName">Recipe Name Will Appear Here</h2>
+
+      <h3>Ingredients:</h3>
+      <ul id="ingredientsList">
+      </ul>
+
+      <h3>Ingredients Table:</h3>
+      <table id="ingredientsTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Ingredient Name</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+      <p id="ingredientCount">Total ingredients: 0</p>
+
+      <button id="resetButton">Create Another Recipe</button>
+    </div>
+    <script src=./script.js></script>
+  </body>
+</html>
