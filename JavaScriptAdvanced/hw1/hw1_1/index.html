@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Student Registry</title>
+  </head>
+  <body>
+    <h1>Student Registry</h1>
+
+    <form id="studentForm">
+      <div>
+        <label for="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          pattern="[A-Za-z\s\-]+"  
+          title="Only letters, spaces and hyphens"
+          required
+        />
+      </div>
+          <!--"pattern="[A-Za-z\s\-]+" bara bokstav-->
+
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" required />
+      </div>
+
+      <div>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required min="1" />
+      </div>
+
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+      </div>
+
+      <button type="submit">Register Student</button>
+    </form>
+
+    <h2>Student Database</h2>
+    <ol id="studentList"></ol>
+    <script src="script.js"></script>
+  </body>
+</html>
