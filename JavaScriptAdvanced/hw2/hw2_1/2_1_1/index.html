@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Star Wars Planets</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><i class="fas fa-globe-americas"></i> Star Wars Planets</h1>
+        <p class="subtitle">Explore planets from the Star Wars universe</p>
+      </header>
+
+      <div class="controls">
+        <button id="fetchButton" class="btn primary">
+          <i class="fas fa-rocket"></i> Get Planets
+        </button>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Loading planets...</p>
+      </div>
+
+      <div id="error" class="error" style="display: none">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span class="error-message"></span>
+      </div>
+
+      <div class="table-container">
+        <table id="planetsTable" style="display: none">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Planet Name</th>
+              <th>Population</th>
+              <th>Climate</th>
+              <th>Gravity</th>
+            </tr>
+          </thead>
+          <tbody id="planetsTableBody"></tbody>
+        </table>
+      </div>
+
+      <footer>
+        <p>
+          Data from
+          <a href="https://swapi.dev/" target="_blank">Star Wars API</a>
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

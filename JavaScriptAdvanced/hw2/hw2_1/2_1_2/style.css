@@ -1,0 +1,38 @@
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+        }
+        
+        .table-dark {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .table-primary {
+            background-color: #1976d2 !important;
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(79, 195, 247, 0.1);
+        }
+        
+        .population {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        
+        .climate {
+            color: #ff9800;
+        }
+        
+        .gravity {
+            color: #e91e63;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #2196f3, #21cbf3);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #1976d2, #1ea8d8);
+        }
