@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JEDI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
+      rel="stylesheet"
+
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero-section">
+      <div class="hero-bg"></div>
+      <div class="stars" id="hero-stars-container"></div>
+
+      <div class="container">
+      </div>
+    </section>
+        <section class="selection-section">
+           <div class="stars" id="selection-stars-container"></div>
+          <h2 class="section-title">Choose Your Archive</h2>
+
+          <div class="boxes-container">
+            <div class="selection-box" id="characters-box">
+            </div>
+
+            <div class="selection-box" id="starships-box">
+            </div>
+          </div>
+        </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARACTERS DATA SECTION -->
+    <section class="data-section" id="characters-section">
+      <div class="container">
+        <button class="back-btn" id="back-from-characters">
+          Back to Archives
+        </button>
+
+        <h2 class="section-title">Star Wars Characters Database</h2>
+        <div class="loading" id="characters-loading">
+          <i class="fas fa-spinner"></i>
+          <p>Accessing Jedi Archives... Retrieving character data</p>
+        </div>
+
+        <div id="characters-table-placeholder"></div>
+      </div>
+    </section>
+
+    <!-- STARSHIPS DATA SECTION -->
+    <section class="data-section" id="starships-section">
+      <div class="container">
+        <button class="back-btn" id="back-from-starships">
+         Back to Archives
+        </button>
+
+        <h2 class="section-title">Star Wars Starships Database</h2>
+
+        <div class="loading" id="starships-loading">
+          <i class="fas fa-spinner"></i>
+          <p>Accessing Jedi Archives... Retrieving starship data</p>
+        </div>
+
+        <div id="starships-table-placeholder"></div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <p>
+          JediArchives 📚 - Rebuilding the collective knowledge of the Star Wars
+          universe
+        </p>
+        <p>Data sourced from SWAPI - The Star Wars API</p>
+        <p>© 2026 JediArchives.</p>
+      </div>
+    </footer>
+
+   <script type="module" src="script.js"></script>
+  </body>
+</html>

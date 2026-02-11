@@ -1,0 +1,88 @@
+.table-container {
+  overflow-x: auto;
+  margin: 30px 0;
+  border: 2px solid var(--sw-gold);
+  border-radius: 10px;
+  padding: 20px;
+  background: rgba(33, 22, 16, 0.8);
+  box-shadow: 
+    0 0 20px rgba(243, 220, 80, 0.1),
+    inset 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Exo 2', sans-serif;
+  color: var(--sw-cream);
+}
+
+thead {
+  background: linear-gradient(135deg, 
+    rgba(243, 220, 80, 0.1), 
+    rgba(213, 184, 0, 0.2));
+}
+
+th {
+  color: var(--sw-gold);
+  padding: 15px 12px;
+  text-align: left;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 2px solid var(--sw-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+th::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--sw-gold);
+  box-shadow: 0 0 8px var(--sw-gold);
+  transition: width 0.3s ease;
+}
+
+table:hover th::after {
+  width: 100%;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(243, 220, 80, 0.1);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(33, 22, 16, 0.4);
+}
+
+tbody tr:nth-child(odd) {
+  background: rgba(71, 64, 85, 0.2);
+}
+
+tbody tr:hover {
+  background: rgba(243, 220, 80, 0.1);
+  transform: scale(1.002);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+tbody tr:hover td {
+  color: var(--sw-gold);
+  text-shadow: 0 0 5px rgba(243, 220, 80, 0.3);
+}
+
+td:first-child {
+  font-weight: 600;
+  color: var(--sw-cream);
+}
+
+td[data-label] {
+  position: relative;
+}
