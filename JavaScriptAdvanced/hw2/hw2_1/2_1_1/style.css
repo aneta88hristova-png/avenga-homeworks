@@ -53,12 +53,18 @@ h1 {
 }
 
 .btn:hover {
-  background: #1976d2;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .btn:disabled {
   background: #666;
   cursor: not-allowed;
+}
+
+.primary {
+  background: linear-gradient(45deg, #2196f3, #21cbf3);
+  color: white;
 }
 
 .loading {
@@ -99,31 +105,56 @@ h1 {
 .table-container {
   overflow-x: auto;
   margin: 30px 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
+  overflow: hidden;
 }
 
 thead {
-  background: #1976d2;
+  background: linear-gradient(45deg, #2196f3, #1976d2);
 }
 
 th {
-  padding: 12px;
+  padding: 15px;
   text-align: left;
+  font-weight: 600;
+}
+
+th.text-center {
+  text-align: center;
 }
 
 td {
-  padding: 12px;
+  padding: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+td:first-child {
+  text-align: center;
 }
 
 tbody tr:hover {
   background: rgba(79, 195, 247, 0.1);
+}
+.population {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.climate {
+  color: #ff9800;
+}
+
+.gravity {
+  color: #e91e63;
 }
 
 .hidden {
@@ -145,4 +176,35 @@ footer a {
 
 footer a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
 }

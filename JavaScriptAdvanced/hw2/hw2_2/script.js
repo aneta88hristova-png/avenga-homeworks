@@ -1,4 +1,5 @@
 const API_BASE_URL = "https://swapi.py4e.com/api/planets/";
+let currentPage = 1;
 
 const fetchPlanets = (apiUrl) => {
   document.getElementById("loading").style.display = "block";
@@ -12,18 +13,7 @@ const fetchPlanets = (apiUrl) => {
     )
     .then((data) => {
       document.getElementById("loading").style.display = "none";
-      printPlanetsToTable(data.results);
-
-      const isPage1 = apiUrl.includes("page=1") || !apiUrl.includes("page=");
-      const isPage2 = apiUrl.includes("page=2");
-
-      if (isPage1) {
-        document.getElementById("nextButton").style.display = "block";
-        document.getElementById("prevButton").style.display = "none";
-      } else if (isPage2) {
-        document.getElementById("nextButton").style.display = "none";
-        document.getElementById("prevButton").style.display = "block";
-      }
+      printPlanetsToTable(data.results, currentPage);
     })
     .catch((error) => {
       document.getElementById("loading").style.display = "none";
@@ -31,42 +21,55 @@ const fetchPlanets = (apiUrl) => {
     });
 };
 
-const printPlanetsToTable = (planets) => {
+const printPlanetsToTable = (planets, page) => {
   const tableBody = document.getElementById("planetsTableBody");
   tableBody.innerHTML = "";
 
-  const planetsToShow = planets.slice(0, 10);
+  const startIndex = (page - 1) * 10; 
 
-  if (planetsToShow.length === 0) {
+  if (planets.length === 0) {
     tableBody.innerHTML =
       '<tr><td colspan="5" style="text-align: center; color: #ff8888;">No planets found</td></tr>';
   } else {
-    planetsToShow.forEach((planet, index) => {
+    planets.forEach((planet, index) => {
       const row = document.createElement("tr");
-
       const population = formatPopulation(planet.population);
+      
+      const planetNumber = startIndex + index + 1;
 
       row.innerHTML = `
-                <td class="text-center">${index + 1}</td>
+                <td class="text-center">${planetNumber}</td>
                 <td><strong>${planet.name}</strong></td>
                 <td class="population">${population}</td>
                 <td class="climate">${planet.climate}</td>
                 <td class="gravity">${planet.gravity}</td>
             `;
-
       tableBody.appendChild(row);
     });
   }
 
   document.getElementById("planetsTable").style.display = "table";
   document.getElementById("pagination").style.display = "flex";
+  toggleButtons(page);
+};
+
+const toggleButtons = (page) => {
+  const nextButton = document.getElementById("nextButton");
+  const prevButton = document.getElementById("prevButton");
+
+  if (page === 1) {
+    nextButton.style.display = "inline-flex";
+    prevButton.style.display = "none";
+  } else if (page === 2) {
+    nextButton.style.display = "none";
+    prevButton.style.display = "inline-flex";
+  }
 };
 
 const formatPopulation = (population) => {
   if (!population || population === "unknown") return "Unknown";
 
   const popNum = Number(population);
-
   if (!isFinite(popNum) || popNum < 0) return population;
 
   return popNum >= 1000000000
@@ -80,8 +83,7 @@ const formatPopulation = (population) => {
 
 const showError = (message) => {
   const errorElement = document.getElementById("error");
-  errorElement.querySelector(".error-message").textContent =
-    `Error: ${message}`;
+  errorElement.querySelector(".error-message").textContent = `Error: ${message}`;
   errorElement.style.display = "flex";
 };
 
@@ -89,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("fetchButton").addEventListener("click", () => {
     const button = document.getElementById("fetchButton");
     button.disabled = true;
-
+    currentPage = 1;
     fetchPlanets("https://swapi.py4e.com/api/planets/?page=1");
 
     setTimeout(() => {
@@ -98,10 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("nextButton").addEventListener("click", () => {
+    currentPage = 2;
     fetchPlanets("https://swapi.py4e.com/api/planets/?page=2");
   });
 
   document.getElementById("prevButton").addEventListener("click", () => {
+    currentPage = 1;
     fetchPlanets("https://swapi.py4e.com/api/planets/?page=1");
   });
 
@@ -114,5 +118,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-console.log("Star Wars Planets Viewer loaded!");
