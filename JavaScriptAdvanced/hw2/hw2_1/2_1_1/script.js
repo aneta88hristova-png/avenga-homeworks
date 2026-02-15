@@ -4,7 +4,6 @@ const fetchPlanets = (apiUrl) => {
   document.getElementById("loading").style.display = "block";
   document.getElementById("error").style.display = "none";
 
-
   fetch(apiUrl)
     .then((response) =>
       !response.ok
@@ -58,12 +57,12 @@ const formatPopulation = (population) => {
 
   if (!isFinite(popNum) || popNum < 0) return population;
 
-  return popNum >= 1000000000
-    ? `${(popNum / 1000000000).toFixed(1)}B`
-    : popNum >= 1000000
-      ? `${(popNum / 1000000).toFixed(1)}M`
-      : popNum >= 1000
-        ? `${(popNum / 1000).toFixed(1)}K`
+  return popNum >= 1_000_000_000
+    ? `${(popNum / 1_000_000_000).toFixed(1)}B`
+    : popNum >= 1_000_000
+      ? `${(popNum / 1_000_000).toFixed(1)}M`
+      : popNum >= 1_000
+        ? `${(popNum / 1_000).toFixed(1)}K`
         : popNum.toLocaleString();
 };
 
@@ -98,5 +97,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-
-console.log("Star Wars Planets Viewer loaded!");
