@@ -69,6 +69,7 @@ fetch("https://dummyjson.com/products")
       .filter((p) => p.rating > 4.5)
       .map((p) => p.discountPercentage)
       .reduce((sum, discount, _, array) => sum + discount / array.length, 0);
+    // Зoшто во reduce ми бара 4 параметри, кога користам само 3?
 
     console.log("6. Average discount:", avgDiscount.toFixed(2) + "%");
 
@@ -100,12 +101,11 @@ fetch("https://dummyjson.com/products")
 
     // 9. The product with the lowest price
     const lowestPricedProduct = products.reduce((min, product) =>
-      product.price < min.price ? product : min
+      product.price < min.price ? product : min,
     );
 
     console.log("9. Product with the lowest price:", lowestPricedProduct);
-
-  }) 
-  .catch((error) => console.error("Error:", error)); 
-   /* Кај функциите за кои што нема информации во API, ставив if-else тернарен оператор за да не ми фрла грешка.
+  })
+  .catch((error) => console.error("Error:", error));
+    /* Кај функциите за кои што нема информации во API, ставив if-else тернарен оператор за да не ми фрла грешка.
    За тие што има, само ги користам методите и ги прикажувам резултатите,  да заштедам на време...:) */
