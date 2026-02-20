@@ -1,45 +1,75 @@
 const SWAPI_BASE_URL = "https://swapi.dev/api";
 
 export const StarWarsAPI = {
+  getCharactersCount: async function () {
+    try {
+      const response = await fetch(`${SWAPI_BASE_URL}/people/`);
 
-  getCharactersCount: function () {
-    return fetch(`${SWAPI_BASE_URL}/people/`)
-      .then((response) => response.json())
-      .then((data) => data.count);
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch characters count`,
+        );
+      }
+
+      const data = await response.json();
+      return data.count;
+    } catch (error) {
+      console.error("Error fetching characters count:", error);
+      return 0;
+    }
   },
 
+  getCharactersPage: async function (page) {
+    try {
+      const response = await fetch(`${SWAPI_BASE_URL}/people/?page=${page}`);
 
-  getCharactersPage: function (page) {
-    return fetch(`${SWAPI_BASE_URL}/people/?page=${page}`)
-      .then((response) => {
-        if (!response.ok) throw new Error('Failed to fetch characters');
-        return response.json();
-      })
-      .then((data) => data.results)
-      .catch((error) => {
-        console.error('Error fetching characters:', error);
-        return [];
-      });
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch characters`,
+        );
+      }
+
+      const data = await response.json();
+      return data.results;
+    } catch (error) {
+      console.error("Error fetching characters:", error);
+      return [];
+    }
   },
 
+  getStarshipsPage: async function (page) {
+    try {
+      const response = await fetch(`${SWAPI_BASE_URL}/starships/?page=${page}`);
 
-  getStarshipsPage: function (page = 1) {
-    return fetch(`${SWAPI_BASE_URL}/starships/?page=${page}`)
-      .then((response) => {
-        if (!response.ok) throw new Error('Failed to fetch starships');
-        return response.json();
-      })
-      .then((data) => data.results)
-      .catch((error) => {
-        console.error('Error fetching starships:', error);
-        return [];
-      });
+      if (!response.ok) {
+        throw new Error(
+          ` Failed to fetch starships`,
+        );
+      }
+
+      const data = await response.json();
+      return data.results;
+    } catch (error) {
+      console.error("Error fetching starships:", error);
+      return [];
+    }
   },
 
+  getStarship: async function (url) {
+    try {
+      const response = await fetch(url);
 
-  getStarship: function (url) {
-    return fetch(url)
-      .then((response) => response.json())
-      .catch(() => null);
-  }
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch starship from ${url}`,
+        );
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching starship:", error);
+      return null;
+    }
+  },
 };
