@@ -47,9 +47,11 @@ The web page should be:
 9. Immediately the view changes to a new table with new ships and a previous button appears
 10. The person clicks on the previous button
 11. Immediately the view changes to a new table with the first ships and the previous button disappears
-______________________________________________________________________________________________________
+
+---
+
 Phase 1: Project Setup & Structure
-v Create project folder structure 
+v Create project folder structure
 
 v Initialize Git repository
 
@@ -58,7 +60,8 @@ v Set up basic HTML5 structure
 c Create main CSS file
 
 v Create main JavaScript file
-______________________________________________________
+
+---
 
 Phase 2: HTML Structure Development
 v Create header with JediArchives logo
@@ -88,7 +91,8 @@ Add back button to return to selection v
 Add loading states for both tables v
 
 Create footer section v
-______________________________________________________________________________
+
+---
 
 Phase 3: CSS Styling & Design
 Set up color scheme (Star Wars theme: dark blues, gold accents) v
@@ -104,7 +108,8 @@ Create responsive design for mobile/tablet/desktop v
 Add loading animations
 
 Implement smooth transitions between views
-___________________________________________________________________________________________________________
+
+---
 
 Phase 4: JavaScript Functionality
 
@@ -119,6 +124,8 @@ Back buttons v
 Pagination buttons v
 
 Integrate with SWAPI (Star Wars API) v
+
+---
 
 Create API service functions:
 
@@ -156,6 +163,8 @@ Add error handling for API calls
 
 Implement loading state management
 
+---
+
 Phase 5: Polish & Optimization
 Test all user flows:
 
@@ -176,6 +185,8 @@ Optimize performance (lazy loading, efficient DOM updates)
 Add visual feedback for loading states
 
 Test browser compatibility
+
+---
 
 Phase 6: Deployment & Documentation
 Clean up code (remove console logs, optimize)
@@ -229,4 +240,3 @@ Loading skeleton screens
 Local storage for user preferences
 
 Shareable URLs for specific pages
-
