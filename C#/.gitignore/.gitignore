@@ -1,0 +1,14 @@
+# Dependencies (folders)
+node_modules/
+vendor/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Configuration files with secrets
+.env
+
+# Built files (compiled code)
+dist/
+build/
