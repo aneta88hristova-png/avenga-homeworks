@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Avancerad Akvarell med Simplex Noise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f9f5f0 0%, #f0e9e0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+            padding: 30px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            color: #4a4a4a;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: #7a7a7a;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+            border-left: 3px solid #c7b5a6;
+            padding-left: 15px;
+        }
+
+        .demo-area {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 800px) {
+            .demo-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .canvas-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(200, 180, 160, 0.2) inset;
+            position: relative;
+        }
+
+        .canvas-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg, #e5c5c4, #a7c7e7, #e5d3b0);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(10px);
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 
+                0 10px 25px -10px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+        }
+
+        .controls-panel h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 500;
+            color: #5a5a5a;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 1px dashed #d0c0b0;
+            padding-bottom: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            color: #6a5a4a;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: #d8d0c8;
+            border-radius: 2px;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid #b0a090;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: #f5f0ea;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background: white;
+            border: 1px solid #d0c0b5;
+            color: #5a4a3a;
+            padding: 10px 15px;
+            border-radius: 40px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .btn:hover {
+            background: #f0e8e0;
+            border-color: #b0a090;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn.primary {
+            background: #c7b5a6;
+            border-color: #b09b8a;
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: #b8a595;
+        }
+
+        .value-badge {
+            background: rgba(200, 180, 160, 0.2);
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #7a6a5a;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(230, 220, 210, 0.3);
+            border-radius: 16px;
+            font-size: 0.9rem;
+            color: #5a5a5a;
+            border-left: 3px solid #c7b5a6;
+        }
+
+        .instruction {
+            font-size: 0.9rem;
+            color: #8a7a6a;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #9a8a7a;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(200, 180, 160, 0.3);
+            padding-top: 20px;
+        }
+
+        a {
+            color: #a58e7a;
+            text-decoration: none;
+            border-bottom: 1px dotted #c7b5a6;
+        }
+
+        a:hover {
+            color: #7a5a4a;
+        }
+
+        .note {
+            background: rgba(230, 220, 210, 0.5);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #6a5a4a;
+            border: 1px solid #d0c0b5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Avancerad Akvarell med Simplex Noise</h1>
+        <div class="subtitle">Professionell akvarelleffekt med naturliga penseldrag och färgflöden</div>
+
+        <div class="demo-area">
+            <div class="canvas-wrapper">
+                <div id="aquarelle-container"></div>
+                <p style="text-align: center; margin-top: 10px; color: #8a7a6a; font-size: 0.8rem;">
+                    ⬆️ Akvarell-effekten använder 3D-brus för naturlig rörelse
+                </p>
+            </div>
+
+            <div class="controls-panel">
+                <h3>🎛️ Kontroller</h3>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>🌊 Amplitude (vågrörelse)</span>
+                        <span class="value-badge" id="amplitude-value">50</span>
+                    </div>
+                    <input type="range" id="amplitude" min="0" max="200" value="50" step="1">
+                    <p class="instruction">Styr hur mycket färgen "flyter ut" (0-200)</p>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>🌀 Frekvens (detaljrikedom)</span>
+                        <span class="value-badge" id="frequency-value">10</span>
+                    </div>
+                    <input type="range" id="frequency" min="1" max="30" value="10" step="0.5">
+                    <p class="instruction">Högre värde = finare penseldrag (1-30)</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn" id="playBtn">▶️ Spela</button>
+                    <button class="btn" id="pauseBtn">⏸️ Pausa</button>
+                    <button class="btn" id="reverseBtn">🔄 Vänd riktning</button>
+                    <button class="btn" id="resetBtn">↺ Återställ</button>
+                    <button class="btn primary" id="loopBtn">🔁 Aktivera loop</button>
+                </div>
+
+                <div class="status" id="status">
+                    <strong>Status:</strong> Redo att börja
+                </div>
+
+                <div class="note">
+                    <strong>✨ Om denna effekt:</strong><br>
+                    Använder simplex noise (3D-brus) för att skapa naturliga, organiska penseldrag som efterliknar riktig akvarell. Färgen rör sig i två lager - stora mjuka penseldrag och små detaljer.
+                </div>
+
+                <p style="margin-top: 15px; font-size: 0.8rem; color: #9a8a7a;">
+                    Tips: Prova att ladda upp din egen bild!
+                </p>
+                <input type="file" id="uploadImage" accept="image/*" style="margin-top: 5px; font-size: 0.8rem;">
+            </div>
+        </div>
+
+        <footer>
+            ⚡ Använder <a href="https://threejs.org" target="_blank">Three.js</a> och avancerad simplex noise för realistisk akvarell<br>
+            <span style="font-size: 0.8rem;">🎨 Rekommenderade färger: #e5c5c4, #a7c7e7, #e5d3b0 — precis som din akvarellpalett!</span>
+        </footer>
+    </div>
+
+    <!-- Ladda in nödvändiga bibliotek -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ClearPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    
+    <!-- Avancerad AquarellePass med Simplex Noise - KORRIGERAD -->
+    <script>
+        var THREE = window.THREE || {};
+
+        THREE.AquarellePass = function(texture, mask) {
+            // Skapa en instans av Pass
+            const pass = new THREE.Pass();
+            
+            this.uniforms = {
+                Texture: {
+                    type: 't',
+                    value: texture
+                },
+                Mask: {
+                    type: 't',
+                    value: mask
+                },
+                Amplitude: {
+                    type: 'f',
+                    value: 50
+                },
+                Frequency: {
+                    type: 'f',
+                    value: 10
+                }
+            };
+
+            this.material = new THREE.ShaderMaterial({
+                uniforms: this.uniforms,
+                vertexShader: [
+                    'varying vec2 vUv;',
+                    'void main() {',
+                    '   vUv = uv;',
+                    '   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1);',
+                    '}'
+                ].join('\n'),
+                fragmentShader: [
+                    'uniform sampler2D Texture;',
+                    'uniform sampler2D Mask;',
+                    'uniform float Amplitude;',
+                    'uniform float Frequency;',
+                    'varying vec2 vUv;',
+
+                    // Simplex noise funktioner
+                    'vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }',
+                    'vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }',
+                    'vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }',
+                    'vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }',
+                    
+                    'float snoise(vec3 v) {',
+                    '   const vec2 C = vec2(1.0/6.0, 1.0/3.0);',
+                    '   const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);',
+
+                    '   vec3 i  = floor(v + dot(v, C.yyy) );',
+                    '   vec3 x0 = v - i + dot(i, C.xxx);',
+
+                    '   vec3 g = step(x0.yzx, x0.xyz);',
+                    '   vec3 l = 1.0 - g;',
+                    '   vec3 i1 = min(g.xyz, l.zxy);',
+                    '   vec3 i2 = max(g.xyz, l.zxy);',
+
+                    '   vec3 x1 = x0 - i1 + C.xxx;',
+                    '   vec3 x2 = x0 - i2 + C.yyy;',
+                    '   vec3 x3 = x0 - D.yyy;',
+
+                    '   i = mod289(i);',
+                    '   vec4 p = permute( permute( permute(',
+                    '       i.z + vec4(0.0, i1.z, i2.z, 1.0 ))',
+                    '       + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))',
+                    '       + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));',
+
+                    '   float n_ = 0.142857142857;',
+                    '   vec3  ns = n_ * D.wyz - D.xzx;',
+
+                    '   vec4 j = p - 49.0 * floor(p * ns.z * ns.z);',
+                    '   vec4 x_ = floor(j * ns.z);',
+                    '   vec4 y_ = floor(j - 7.0 * x_);',
+
+                    '   vec4 x = x_ * ns.x + ns.yyyy;',
+                    '   vec4 y = y_ * ns.x + ns.yyyy;',
+                    '   vec4 h = 1.0 - abs(x) - abs(y);',
+
+                    '   vec4 b0 = vec4(x.xy, y.xy);',
+                    '   vec4 b1 = vec4(x.zw, y.zw);',
+
+                    '   vec4 s0 = floor(b0)*2.0 + 1.0;',
+                    '   vec4 s1 = floor(b1)*2.0 + 1.0;',
+                    '   vec4 sh = -step(h, vec4(0.0));',
+
+                    '   vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;',
+                    '   vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;',
+
+                    '   vec3 p0 = vec3(a0.xy, h.x);',
+                    '   vec3 p1 = vec3(a0.zw, h.y);',
+                    '   vec3 p2 = vec3(a1.xy, h.z);',
+                    '   vec3 p3 = vec3(a1.zw, h.w);',
+
+                    '   vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));',
+                    '   p0 *= norm.x;',
+                    '   p1 *= norm.y;',
+                    '   p2 *= norm.z;',
+                    '   p3 *= norm.w;',
+
+                    '   vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);',
+                    '   m = m * m;',
+                    '   return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));',
+                    '}',
+
+                    'void main() {',
+                    '   vec2 offset;',
+                    '   float noise = snoise(vec3(vUv * Frequency, 0.0)) * 3.14;',
+                    '   offset = vec2(cos(noise), sin(noise)) * Amplitude * 0.001;',
+
+                    '   vec4 textureColor = texture2D(Texture, vUv + offset);',
+
+                    '   vec2 shift = vUv;',
+                    '   float largeNoise = snoise(vec3(vUv * 20.0, 0.0));',
+                    '   shift += vec2(cos(largeNoise), sin(largeNoise)) * 0.07;',
+                    '   float smallNoise = snoise(vec3(vUv * 70.0, 0.0));',
+                    '   shift += vec2(cos(smallNoise), sin(smallNoise)) * 0.02;',
+
+                    '   vec4 maskColor = texture2D(Mask, shift);',
+
+                    '   gl_FragColor = vec4(textureColor.rgb, maskColor.a);',
+                    '}'
+                ].join('\n'),
+                transparent: true
+            });
+
+            this.needsSwap = false;
+            this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            this.scene = new THREE.Scene();
+            this.quad = new THREE.Mesh(new THREE.PlaneBufferGeometry(2, 2));
+            this.scene.add(this.quad);
+            
+            // Kopiera egenskaper från Pass-instansen
+            Object.assign(this, pass);
+        };
+
+        // Ärv från Pass.prototype
+        THREE.AquarellePass.prototype = Object.create(THREE.Pass.prototype);
+        THREE.AquarellePass.prototype.constructor = THREE.AquarellePass;
+
+        THREE.AquarellePass.prototype.render = function(renderer, writeBuffer, readBuffer) {
+            this.quad.material = this.material;
+            renderer.render(this.scene, this.camera, readBuffer, this.clear);
+        };
+    </script>
+
+    <!-- Huvudkod för Aquarelle (med egen EventDispatcher) -->
+    <script>
+        (function() {
+            var stack = [];
+            var lastTime = Date.now();
+
+            // Egen EventDispatcher
+            function EventDispatcher() {
+                this._listeners = {};
+            }
+
+            EventDispatcher.prototype.addEventListener = function(type, listener) {
+                if (this._listeners[type] === undefined) {
+                    this._listeners[type] = [];
+                }
+                if (this._listeners[type].indexOf(listener) === -1) {
+                    this._listeners[type].push(listener);
+                }
+            };
+
+            EventDispatcher.prototype.removeEventListener = function(type, listener) {
+                if (this._listeners[type] === undefined) return;
+                var index = this._listeners[type].indexOf(listener);
+                if (index !== -1) {
+                    this._listeners[type].splice(index, 1);
+                }
+            };
+
+            EventDispatcher.prototype.dispatchEvent = function(event) {
+                if (this._listeners[event.type] !== undefined) {
+                    var listeners = this._listeners[event.type].slice(0);
+                    for (var i = 0; i < listeners.length; i++) {
+                        listeners[i].call(this, event);
+                    }
+                }
+            };
+
+            function Aquarelle(texture, mask, options) {
+                var self = this;
+                
+                EventDispatcher.call(this);
+
+                self.setOptions(Aquarelle.defaultOptions);
+                self.setOptions(options);
+
+                self.mask = {};
+
+                self.mask.canvas = document.createElement('canvas');
+                self.mask.ctx = self.mask.canvas.getContext('2d');
+
+                if(typeof mask === 'string') {
+                    self.mask.img = new Image();
+                    self.mask.img.onload = function() {
+                        self.drawMaskImage();
+                    };
+                    self.mask.img.crossOrigin = 'Anonymous';
+                    self.mask.img.src = mask;
+                } else if(mask && mask.nodeName && mask.src) {
+                    self.mask.img = mask;
+                    self.drawMaskImage();
+                } else if(mask instanceof HTMLCanvasElement) {
+                    self.mask.canvas = mask;
+                    self.mask.ctx = mask.getContext('2d');
+                }
+
+                if(typeof texture === 'string') {
+                    new THREE.TextureLoader().load(texture, function(loadedTexture) {
+                        self.texture = loadedTexture;
+                        self.texture.minFilter = THREE.LinearFilter;
+                        self.initComposer();
+                    });
+                } else if(texture && texture.isTexture) {
+                    self.texture = texture;
+                    self.initComposer();
+                } else if(texture instanceof HTMLCanvasElement) {
+                    self.texture = new THREE.CanvasTexture(texture);
+                    self.initComposer();
+                }
+
+                stack.push(self);
+            }
+
+            Aquarelle.prototype = Object.create(EventDispatcher.prototype);
+            Aquarelle.prototype.constructor = Aquarelle;
+
+            Aquarelle.prototype.initComposer = function() {
+                var self = this;
+                
+                if(!self.texture || !self.mask.canvas) return;
+                
+                // Säkerställ att canvas har rätt storlek
+                if (!self.mask.canvas.width || !self.mask.canvas.height) {
+                    self.mask.canvas.width = self.texture.image.width;
+                    self.mask.canvas.height = self.texture.image.height;
+                }
+                
+                var composer = self.getComposer();
+                composer.addPass(new THREE.ClearPass());
+
+                var maskTexture = new THREE.CanvasTexture(self.mask.canvas);
+                maskTexture.minFilter = THREE.LinearFilter;
+
+                var turbulentPass = self.turbulentPass = new THREE.AquarellePass(self.texture, maskTexture);
+                composer.addPass(turbulentPass);
+
+                var outputPass = new THREE.ShaderPass(THREE.CopyShader);
+                outputPass.renderToScreen = true;
+                composer.addPass(outputPass);
+
+                self.dispatchEvent({type: 'created'});
+
+                if(self.options.autoplay) {
+                    self.start();
+                }
+
+                self.reset();
+                self.isInitialized = true;
+            };
+
+            Aquarelle.prototype.getRenderer = function() {
+                if(!this.renderer) {
+                    var renderer = this.renderer = new THREE.WebGLRenderer({
+                        alpha: true
+                    });
+                    renderer.setClearColor(0x000000, 0);
+                    renderer.setSize(this.texture ? this.texture.image.width : 512, this.texture ? this.texture.image.height : 512);
+                    renderer.autoClear = false;
+                    
+                    var container = document.getElementById('aquarelle-container');
+                    while (container.firstChild) {
+                        container.removeChild(container.firstChild);
+                    }
+                    container.appendChild(renderer.domElement);
+                }
+                return this.renderer;
+            };
+            
+            Aquarelle.prototype.getComposer = function() {
+                if(!this.composer) {
+                    var width = this.texture ? this.texture.image.width : 512;
+                    var height = this.texture ? this.texture.image.height : 512;
+                    this.composer = new THREE.EffectComposer(this.getRenderer(), new THREE.WebGLRenderTarget(width, height));
+                }
+                return this.composer;
+            };
+
+            Aquarelle.prototype.drawMaskImage = function() {
+                var mask = this.mask || {};
+
+                if(mask.img) {
+                    mask.canvas.width = mask.img.width;
+                    mask.canvas.height = mask.img.height;
+                    mask.ctx.drawImage(mask.img, 0, 0);
+                }
+            };
+            
+            Aquarelle.prototype.direction = 1;
+            Aquarelle.prototype.progress = 1;
+            Aquarelle.prototype.isPaused = true;
+
+            Aquarelle.prototype.render = function(delta) {
+                if(!this.turbulentPass || !this.composer || !this.isInitialized) {
+                    return;
+                }
+
+                var lastProgress = this.progress;
+                var progress = this.clampedProgress(lastProgress + this.direction * delta / (this.options.duration / 1000));
+
+                if(!this.isPaused && lastProgress !== progress) {
+                    this.progress = progress;
+                    this.reset();
+                }
+                
+                this.getRenderer().clear();
+                this.getComposer().render(delta);
+            };
+
+            Aquarelle.prototype.transitionForProgressInRange = function(progress, startValue, endValue) {
+                return startValue + (endValue - startValue) * progress;
+            };
+            
+            Aquarelle.prototype.progressForValueInRange = function(value, startValue, endValue) {
+                return (value - startValue) / (endValue - startValue);
+            };
+            
+            Aquarelle.prototype.clampedProgress = function(progress) {
+                return Math.max(0, Math.min(progress, 1));
+            };
+
+            Aquarelle.prototype.transitionInRange = function(startValue, endValue, startTime, endTime) {
+                return this.transitionForProgressInRange(this.clampedProgress(this.progressForValueInRange(this.progress, (startTime || 0) / this.options.duration, (endTime || this.options.duration) / this.options.duration)), startValue, endValue);
+            };
+
+            Aquarelle.prototype.isComplete = function() {
+                return this.direction > 0 ? this.progress === 1 : this.direction < 0 && !this.progress;
+            };
+
+            Aquarelle.prototype.pause = function() {
+                if(this.isPaused) return;
+                this.isPaused = true;
+                if(this.isInitialized) {
+                    this.dispatchEvent({type: 'paused'});
+                }
+            };
+            
+            Aquarelle.prototype.play = function() {
+                if(!this.isPaused) return;
+                this.isPaused = false;
+                this.dispatchEvent({type: 'played'});
+            };
+            
+            Aquarelle.prototype.stop = function() {
+                if(this.progress === +(this.direction >= 0) && this.isPaused) return;
+                this.progress = +(this.direction >= 0);
+                this.pause();
+                if(this.isInitialized) {
+                    this.dispatchEvent({type: 'stopped'});
+                }
+            };
+            
+            Aquarelle.prototype.start = function() {
+                if(this.progress === +(this.direction < 0) && !this.isPaused) return;
+                this.progress = +(this.direction < 0);
+                this.dispatchEvent({type: 'started'});
+                this.play();
+            };
+
+            Aquarelle.prototype.reverse = function() {
+                this.direction = this.direction < 0 ? 1 : -1;
+            };
+            
+            Aquarelle.prototype.reset = function() {
+                if(!this.turbulentPass) return;
+
+                if (this.turbulentPass.uniforms) {
+                    this.turbulentPass.uniforms.Amplitude.value = this.transitionInRange(this.options.fromAmplitude, this.options.toAmplitude);
+                    this.turbulentPass.uniforms.Frequency.value = this.transitionInRange(this.options.fromFrequency, this.options.toFrequency);
+                }
+
+                this.dispatchEvent({type: 'changed'});
+
+                if(this.isComplete()) {
+                    this.dispatchEvent({type: 'completed'});
+                    var isPaused = this.isPaused;
+                    this.stop();
+                    
+                    if(this.options.loop && !isPaused) {
+                        this.start();
+                    }
+                }
+            };
+
+            Aquarelle.prototype.setOptions = function(options) {
+                if(typeof options === 'object' && options !== null) {
+                    this.options = Object.assign(this.options || {}, options);
+                }
+            };
+
+            Aquarelle.defaultOptions = {
+                fromAmplitude: 50,
+                toAmplitude: 0,
+                fromFrequency: 10,
+                toFrequency: 5,
+                autoplay: false,
+                loop: false,
+                duration: 8000
+            };
+
+            function frame() {
+                var time = Date.now();
+                var deltaTime = time - lastTime;
+                lastTime = time;
+
+                stack.forEach(function(item) {
+                    item.render(deltaTime / 1000);
+                });
+
+                requestAnimationFrame(frame);
+            }
+            frame();
+
+            window.Aquarelle = Aquarelle;
+        })();
+    </script>
+
+    <!-- Applikationslogik -->
+    <script>
+        let aquarelle = null;
+        let currentOptions = {
+            fromAmplitude: 50,
+            toAmplitude: 0,
+            fromFrequency: 10,
+            toFrequency: 5,
+            autoplay: false,
+            loop: false,
+            duration: 8000
+        };
+
+        function createDefaultMask() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            
+            const gradient = ctx.createRadialGradient(256, 256, 100, 256, 256, 256);
+            gradient.addColorStop(0, 'white');
+            gradient.addColorStop(0.7, 'rgba(255,255,255,0.8)');
+            gradient.addColorStop(1, 'rgba(255,255,255,0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            return canvas;
+        }
+
+        function createTestImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            
+            // Rita en fin akvarell-inspirerad bakgrund
+            const gradient1 = ctx.createLinearGradient(0, 0, 512, 512);
+            gradient1.addColorStop(0, '#e5c5c4');
+            gradient1.addColorStop(0.3, '#a7c7e7');
+            gradient1.addColorStop(0.6, '#e5d3b0');
+            gradient1.addColorStop(1, '#c7b5a6');
+            ctx.fillStyle = gradient1;
+            ctx.fillRect(0, 0, 512, 512);
+            
+            // Lägg till ett akvarell-inspirerat motiv
+            ctx.globalCompositeOperation = 'overlay';
+            for(let i = 0; i < 8; i++) {
+                ctx.beginPath();
+                ctx.arc(256 + Math.sin(i) * 150, 256 + Math.cos(i) * 150, 80, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255,255,255,0.15)`;
+                ctx.fill();
+            }
+            
+            // Lägg till några penseldrag
+            ctx.globalCompositeOperation = 'overlay';
+            ctx.lineWidth = 30;
+            for(let i = 0; i < 3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(100 + i*100, 100);
+                ctx.quadraticCurveTo(300, 200, 400, 400);
+                ctx.strokeStyle = `rgba(255,255,255,0.2)`;
+                ctx.stroke();
+            }
+            
+            return canvas;
+        }
+
+        function initAquarelle() {
+            const imageCanvas = createTestImage();
+            const maskCanvas = createDefaultMask();
+            
+            aquarelle = new Aquarelle(imageCanvas, maskCanvas, currentOptions);
+            
+            updateStatus('Skapad');
+            
+            aquarelle.addEventListener('played', () => updateStatus('Spelar'));
+            aquarelle.addEventListener('paused', () => updateStatus('Pausad'));
+            aquarelle.addEventListener('stopped', () => updateStatus('Stoppad'));
+            aquarelle.addEventListener('completed', () => updateStatus('Klar'));
+        }
+
+        function updateStatus(status) {
+            const statusEl = document.getElementById('status');
+            if (statusEl && aquarelle) {
+                statusEl.innerHTML = `<strong>Status:</strong> ${status} | Progress: ${Math.round(aquarelle.progress * 100)}%<br>` +
+                    `<small>Amplitude: ${aquarelle.options.fromAmplitude} | Frequency: ${aquarelle.options.fromFrequency}</small>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initAquarelle();
+
+            document.getElementById('amplitude').addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                document.getElementById('amplitude-value').textContent = val;
+                if (aquarelle && aquarelle.options) {
+                    aquarelle.options.fromAmplitude = val;
+                    aquarelle.options.toAmplitude = val * 0.3;
+                    aquarelle.reset();
+                }
+            });
+
+            document.getElementById('frequency').addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                document.getElementById('frequency-value').textContent = val.toFixed(1);
+                if (aquarelle && aquarelle.options) {
+                    aquarelle.options.fromFrequency = val;
+                    aquarelle.options.toFrequency = val * 0.7;
+                    aquarelle.reset();
+                }
+            });
+
+            document.getElementById('playBtn').addEventListener('click', () => {
+                if (aquarelle) aquarelle.play();
+            });
+
+            document.getElementById('pauseBtn').addEventListener('click', () => {
+                if (aquarelle) aquarelle.pause();
+            });
+
+            document.getElementById('reverseBtn').addEventListener('click', () => {
+                if (aquarelle) {
+                    aquarelle.reverse();
+                    updateStatus('Riktning ändrad');
+                }
+            });
+
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                if (aquarelle) {
+                    aquarelle.progress = 1;
+                    aquarelle.direction = 1;
+                    aquarelle.reset();
+                    aquarelle.pause();
+                    updateStatus('Återställd');
+                }
+            });
+
+            document.getElementById('loopBtn').addEventListener('click', (e) => {
+                if (aquarelle && aquarelle.options) {
+                    aquarelle.options.loop = !aquarelle.options.loop;
+                    e.target.textContent = aquarelle.options.loop ? '🔁 Loop: På' : '🔁 Aktivera loop';
+                    e.target.classList.toggle('primary', aquarelle.options.loop);
+                }
+            });
+
+            document.getElementById('uploadImage').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = img.width;
+                            canvas.height = img.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0);
+                            
+                            const maskCanvas = document.createElement('canvas');
+                            maskCanvas.width = img.width;
+                            maskCanvas.height = img.height;
+                            const maskCtx = maskCanvas.getContext('2d');
+                            
+                            // Skapa en mjuk mask
+                            const gradient = maskCtx.createRadialGradient(
+                                img.width/2, img.height/2, img.height/4,
+                                img.width/2, img.height/2, img.height/2
+                            );
+                            gradient.addColorStop(0, 'white');
+                            gradient.addColorStop(0.8, 'rgba(255,255,255,0.5)');
+                            gradient.addColorStop(1, 'rgba(255,255,255,0)');
+                            
+                            maskCtx.fillStyle = gradient;
+                            maskCtx.fillRect(0, 0, img.width, img.height);
+                            
+                            aquarelle = new Aquarelle(canvas, maskCanvas, currentOptions);
+                            updateStatus('Ny bild laddad');
+                        };
+                        img.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+        setInterval(() => {
+            if (aquarelle) {
+                updateStatus(aquarelle.isPaused ? 'Pausad' : 'Spelar');
+            }
+        }, 100);
+    </script>
+</body>
+</html>
