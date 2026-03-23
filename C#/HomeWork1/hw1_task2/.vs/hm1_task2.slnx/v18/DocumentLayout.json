@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hm1_task2\\",
+  "WorkspaceRootPath": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DEE5C709-7FB9-4F9A-870F-343C7D827AA9}|hm1_task2\\hm1_task2.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\hm1_task2\\hm1_task2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DEE5C709-7FB9-4F9A-870F-343C7D827AA9}|hm1_task2\\hm1_task2.csproj|solutionrelative:hm1_task2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{ACC642D3-BE46-BB9A-9FA0-53CF880255B2}|hm1_task2\\hm1_task2.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\homework1\\hw1_task2\\hm1_task2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ACC642D3-BE46-BB9A-9FA0-53CF880255B2}|hm1_task2\\hm1_task2.csproj|solutionrelative:hm1_task2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DEE5C709-7FB9-4F9A-870F-343C7D827AA9}|hm1_task2\\hm1_task2.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\hm1_task2\\hm1_task2\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{DEE5C709-7FB9-4F9A-870F-343C7D827AA9}|hm1_task2\\hm1_task2.csproj|solutionrelative:hm1_task2\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+      "AbsoluteMoniker": "D:0:0:{ACC642D3-BE46-BB9A-9FA0-53CF880255B2}|hm1_task2\\hm1_task2.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\homework1\\hw1_task2\\hm1_task2\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{ACC642D3-BE46-BB9A-9FA0-53CF880255B2}|hm1_task2\\hm1_task2.csproj|solutionrelative:hm1_task2\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,24 +28,23 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "README.md",
-              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hm1_task2\\hm1_task2\\README.md",
+              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task2\\hm1_task2\\README.md",
               "RelativeDocumentMoniker": "hm1_task2\\README.md",
-              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hm1_task2\\hm1_task2\\README.md",
+              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task2\\hm1_task2\\README.md",
               "RelativeToolTip": "hm1_task2\\README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-03-19T11:32:54.744Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-19T11:32:54.744Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hm1_task2\\hm1_task2\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task2\\hm1_task2\\Program.cs",
               "RelativeDocumentMoniker": "hm1_task2\\Program.cs",
-              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hm1_task2\\hm1_task2\\Program.cs",
+              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task2\\hm1_task2\\Program.cs",
               "RelativeToolTip": "hm1_task2\\Program.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwCAAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-19T11:31:46.406Z",
               "EditorCaption": ""

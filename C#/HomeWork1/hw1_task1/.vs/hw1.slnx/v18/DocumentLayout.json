@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hw1\\",
+  "WorkspaceRootPath": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E1091BFD-E141-3BB6-7FC6-6B3ECECDACB6}|hw1\\hw1.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\hw1\\hw1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E1091BFD-E141-3BB6-7FC6-6B3ECECDACB6}|hw1\\hw1.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\homework1\\hw1_task1\\hw1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1091BFD-E141-3BB6-7FC6-6B3ECECDACB6}|hw1\\hw1.csproj|solutionrelative:hw1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1091BFD-E141-3BB6-7FC6-6B3ECECDACB6}|hw1\\hw1.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\hw1\\hw1\\redame.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "AbsoluteMoniker": "D:0:0:{E1091BFD-E141-3BB6-7FC6-6B3ECECDACB6}|hw1\\hw1.csproj|c:\\users\\aneta\\desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\c#\\homework1\\hw1_task1\\hw1\\redame.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
       "RelativeMoniker": "D:0:0:{E1091BFD-E141-3BB6-7FC6-6B3ECECDACB6}|hw1\\hw1.csproj|solutionrelative:hw1\\redame.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     }
   ],
@@ -18,32 +18,27 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "REDAME.md",
-              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hw1\\hw1\\REDAME.md",
+              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task1\\hw1\\REDAME.md",
               "RelativeDocumentMoniker": "hw1\\REDAME.md",
-              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hw1\\hw1\\REDAME.md",
+              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task1\\hw1\\REDAME.md",
               "RelativeToolTip": "hw1\\REDAME.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-03-19T10:48:20.78Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-19T10:48:20.78Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hw1\\hw1\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task1\\hw1\\Program.cs",
               "RelativeDocumentMoniker": "hw1\\Program.cs",
-              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\hw1\\hw1\\Program.cs",
+              "ToolTip": "C:\\Users\\aneta\\Desktop\\avenga predavanja\\avenga-homeworks\\avenga-homeworks\\C#\\HomeWork1\\hw1_task1\\hw1\\Program.cs",
               "RelativeToolTip": "hw1\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
