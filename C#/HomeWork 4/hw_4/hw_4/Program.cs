@@ -1,36 +1,5 @@
 ﻿using System;
 
-public class Driver
-{
-    public string Name { get; set; }
-    public int Skill { get; set; }
-
-    public Driver(string name, int skill)
-    {
-        Name = name;
-        Skill = skill;
-    }
-}
-
-public class Car
-{
-    public string Model { get; set; }
-    public int Speed { get; set; }
-    public Driver Driver { get; set; }
-
-    public Car(string model, int speed)
-    {
-        Model = model;
-        Speed = speed;
-        Driver = null!;
-    }
-
-    public int CalculateSpeed(Driver driver)
-    {
-        return Speed * driver.Skill;
-    }
-}
-
 public class Program
 {
     public static void Main()
@@ -45,7 +14,7 @@ public class Program
         Driver driver3 = new Driver("Jill", 5);
         Driver driver4 = new Driver("Aneta", 10);
 
-        Console.Write("Choose a car no.1:\n1. Hyundai\n2. Mazda\n3. Ferrari\n4. Porsche\n");//Дали овој начин може да се користи наместо Console.WriteLine за секој ред? Помалку е читлив, но пократок е:).
+        Console.Write("Choose a car no.1:\n1. Hyundai\n2. Mazda\n3. Ferrari\n4. Porsche\n");
         int choice1 = GetValidChoice(1, 4);
 
         Car selectedCar1 = null!;
@@ -108,7 +77,6 @@ public class Program
 
         while (selectedDriver2 == selectedCar1.Driver)
         {
-
             Console.WriteLine($"\n {selectedDriver2.Name} is already driving car no.1!");
             Console.WriteLine("Choose a different driver:\n");
             Console.WriteLine("1. Bob");
