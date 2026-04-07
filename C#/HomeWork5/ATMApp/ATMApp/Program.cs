@@ -15,57 +15,84 @@ namespace SimpleATMApp
             DepositService deposit = new DepositService();
             RegistrationService register = new RegistrationService(customers);
 
-            Console.WriteLine("=== WELCOME TO SIMPLE ATM ===");
-            Console.WriteLine("Test accounts: 11112222/1234, 33334444/4321, 55556666/1111");
-
             while (true)
             {
-                Customer currentCustomer = auth.Login();
-                if (currentCustomer == null)
+                Console.Clear();
+                Console.WriteLine("=== WELCOME TO SIMPLE ATM ===");
+                Console.WriteLine("1. Login");
+                Console.WriteLine("2. Register New Card");
+                Console.WriteLine("3. Exit");
+                Console.Write("Choose (1-3): ");
+
+                string choice = Console.ReadLine();
+
+                if (choice == "1")
                 {
-                    Console.WriteLine("Invalid card or PIN!");
-                    menu.PressAnyKey();
-                    continue;
-                }
+                    Customer currentCustomer = auth.Login();
 
-                menu.ShowWelcomeMessage(currentCustomer);
-                menu.PressAnyKey();
-                bool customerSession = true;
-
-                while (customerSession)
-                {
-                    menu.ShowWelcomeMessage(currentCustomer);
-                    int choice = menu.GetUserChoice();
-
-                    switch (choice)
+                    if (currentCustomer == null)
                     {
-                        case 1:
+                        Console.WriteLine("Invalid card or PIN!");
+                        menu.PressAnyKey();
+                        continue;
+                    }
+
+                    bool loggedIn = true;
+
+                    while (loggedIn)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("=== WELCOME " + currentCustomer.FullName.ToUpper() + " ===");
+                        Console.WriteLine("");
+                        Console.WriteLine("1. Check Balance");
+                        Console.WriteLine("2. Withdraw Cash");
+                        Console.WriteLine("3. Deposit Cash");
+                        Console.WriteLine("4. Logout");
+                        Console.Write("Choose (1-4): ");
+
+                        string userChoice = Console.ReadLine();
+
+                        if (userChoice == "1")
+                        {
                             balance.CheckBalance(currentCustomer);
-                            break;
-                        case 2:
+                            menu.PressAnyKey();
+                        }
+                        else if (userChoice == "2")
+                        {
                             withdraw.WithdrawCash(currentCustomer);
-                            break;
-                        case 3:
+                            menu.PressAnyKey();
+                        }
+                        else if (userChoice == "3")
+                        {
                             deposit.DepositCash(currentCustomer);
-                            break;
-                        case 4:
-                            register.RegisterNewCard();
-                            break;
-                        case 5:
+                            menu.PressAnyKey();
+                        }
+                        else if (userChoice == "4")
+                        {
                             Console.Clear();
                             Console.WriteLine("Goodbye " + currentCustomer.FullName + "!");
-                            customerSession = false;
-                            break;
-                        default:
+                            loggedIn = false;
+                        }
+                        else
+                        {
                             Console.WriteLine("Invalid choice!");
-                            break;
+                            menu.PressAnyKey();
+                        }
                     }
-
-                    if (customerSession && choice >= 1 && choice <= 4)
-                    {
-                        menu.PressAnyKey();
-                        customerSession = menu.AskForAnotherAction();
-                    }
+                }
+                else if (choice == "2")
+                {
+                    register.RegisterNewCard();
+                }
+                else if (choice == "3")
+                {
+                    Console.WriteLine("Thank you for using Simple ATM!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice!");
+                    menu.PressAnyKey();
                 }
             }
         }
