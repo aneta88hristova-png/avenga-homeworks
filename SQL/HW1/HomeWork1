@@ -1,0 +1,105 @@
+SELECT 
+    t.ID,
+    t.FirstName, 
+    t.LastName,
+    COUNT(g.ID) AS TotalGrades
+FROM Teacher t
+LEFT JOIN Grade g ON t.ID =g.TeacherID
+GROUP BY 
+    t.ID, 
+    t.FirstName, 
+    t.LastName
+ORDER BY TotalGrades DESC;
+
+
+SELECT 
+    t.ID, 
+    t.FirstName, 
+    t.LastName,
+    COUNT (g.ID) AS TotalGrades
+FROM Teacher t
+LEFT JOIN Grade g ON t.ID = g.TeacherID
+WHERE g.StudentID < 100
+GROUP BY 
+    t.ID, 
+    t.FirstName, 
+    t.LastName
+ORDER BY TotalGrades DESC;
+
+
+
+SELECT 
+    s.ID, 
+    s.FirstName, 
+    s.LastName,
+    MAX(g.Grade) AS MaxGrade,
+    AVG(g.Grade) AS AverageGrade
+FROM Student s
+LEFT JOIN Grade g ON s.ID = g.StudentID
+GROUP BY 
+    s.ID,
+    s.FirstName, 
+    s.LastName
+ORDER BY MaxGrade DESC;
+
+SELECT 
+    t.ID,
+    t.FirstName,
+    t.LastName,
+    COUNT(g.ID) AS TotalGrades
+FROM Teacher t
+LEFT JOIN Grade g ON t.ID = g.TeacherID
+GROUP BY 
+   t.ID,
+   t.FirstName,
+   t.LastName
+HAVING COUNT(g.ID) > 200
+ORDER BY TotalGrades DESC;
+
+
+
+SELECT 
+    s.ID,
+    s.FirstName,
+    s.LastName,
+    COUNT(g.ID) AS GradeCount,
+    MAX(g.Grade) AS MaxGrade,
+    AVG(g.Grade) AS AverageGrade
+FROM Student s
+LEFT JOIN Grade g ON s.ID = g.StudentID
+GROUP BY 
+    s.ID,
+    s.FirstName,
+    s.LastName
+HAVING MAX(g.Grade) = AVG(g.Grade)
+ORDER BY MaxGrade DESC;
+
+
+CREATE VIEW vv_StudentGrades AS
+SELECT 
+    s.ID AS StudentId,
+    COUNT(g.ID) AS GradeCount
+FROM Student s
+LEFT JOIN Grade g ON s.ID = g.StudentID
+GROUP BY s.ID;
+
+
+SELECT * FROM  [vv_StudentGrades];
+
+
+
+ALTER VIEW vv_StudentGrades AS
+SELECT 
+    s.FirstName,
+    s.LastName,
+    COUNT(g.ID) AS GradeCount
+FROM Student s
+LEFT JOIN Grade g ON s.ID = g.StudentID
+GROUP BY 
+    s.LastName, 
+    s.FirstName;
+
+SELECT * FROM [vv_StudentGrades];
+
+SELECT * FROM vv_StudentGrades
+ORDER BY GradeCount DESC;
