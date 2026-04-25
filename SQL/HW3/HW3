@@ -1,0 +1,74 @@
+--Declare scalar variable FirstName = 'Antonio'
+
+DECLARE @FirstName NVARCHAR(50);
+SET @FirstName = 'Antonio';
+
+--Find all Students with that FirstName
+
+SELECT * FROM Student
+WHERE FirstName = @FirstName;
+
+-- Create table variable with StudentId, StudentName, DateOfBirth
+CREATE TABLE #StudentTable ( --#ne za variable
+    StudentId INT,
+    StudentName NVARCHAR(255),
+    DateOfBirth DATE
+);
+DROP Table #StudentTable;
+
+DECLARE @StudentTable TABLE (
+    StudentID INT,
+    StudentName NVARCHAR(255),
+    DateOfBirth DATE
+);
+
+-- Fill with Female students
+
+INSERT INTO @StudentTable (StudentID, StudentName, DateOfBirth)
+SELECT 
+    ID,
+    FirstName + ' ' + LastName AS StudentName,
+    DateOfBirth
+FROM Student
+WHERE Gender = 'F'; 
+
+SELECT * FROM @StudentTable 
+
+-- Create temp table with LastName and EnrolledDate
+
+CREATE TABLE #TempTable (
+    LastName NVARCHAR(255),
+    EnrolledDate DATE
+);
+
+--- Fill with Male students starting with 'A'
+
+DELETE FROM #TempTable; --test
+
+INSERT INTO #TempTable (LastName, EnrolledDate) -- !!LastName i temp table
+SELECT 
+    LastName,
+    EnrolledDate
+FROM Student
+WHERE Gender = 'M' AND LastName LIKE 'A%';
+
+SELECT * FROM #TempTable
+
+-- Find students with LastName length = 7
+
+SELECT * FROM #TempTable
+WHERE LEN(LastName) = 7;
+
+SELECT * FROM Student
+WHERE LEN(LastName)=7;
+
+-- Find teachers with FirstName length < 5 and same first 3 letters in First/Last name
+
+SELECT * FROM Teacher
+WHERE LEN(FirstName) < 5 
+  AND LEFT(FirstName, 3) = LEFT(LastName, 3);
+
+SELECT * FROM Teacher
+WHERE LEN(FirstName) < 5
+    AND SUBSTRING (FirstName, 1, 3) = SUBSTRING (LastName, 1, 3)
+
