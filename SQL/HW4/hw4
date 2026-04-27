@@ -1,0 +1,121 @@
+-- Create procedure CreateGrade
+CREATE OR ALTER PROCEDURE CreateGrade
+(
+  @StudentID INT, 
+  @TeacherID INT, 
+  @GradeValue INT, 
+  @Comment NVARCHAR(MAX),
+  @CreateDate DATETIME = NULL
+  )
+  AS
+  BEGIN
+
+    IF @CreateDate IS NULL
+         SET @CreateDate = GETDATE()
+    PRINT 'New grade has been added on date: ' + CONVERT(VARCHAR(10), @CreateDate, 104);
+
+-- Insert grade header
+INSERT INTO Grade (StudentID, TeacherID, Grade, Comment)
+VALUES (@StudentID, @TeacherID, @GradeValue, @Comment);
+
+-- Return total grades per student
+ SELECT  @StudentID AS StudentID,
+         COUNT(*) AS TotalGradesPerStudent
+ FROM Grade
+ WHERE StudentID = @StudentID
+ GROUP BY StudentID;
+
+ -- Return MAX grade per student and teacher
+SELECT 
+      StudentID,
+      TeacherID,
+      MAX(Grade) AS MaxGradePerStudentAndTeacher
+FROM Grade
+WHERE StudentID = @StudentID AND TeacherID = @TeacherID
+GROUP BY StudentID, TeacherID;
+END
+GO
+
+
+
+EXECUTE dbo.CreateGrade 56, 4, 10, 'Test comment', '2026-04-28';
+
+--56 ->StudentID
+--4  ->TeacherID
+--10 ->Grade
+--'Test comment' - se cuva vo tabela
+--'2026-04-28'- vo Messages tab
+________________________________________________________________________________________________________
+________________________________________________________________________________________________________
+
+
+-- Create procedure CreateGradeDetail
+CREATE OR ALTER PROCEDURE CreateGradeDetail
+(
+    @GradeID INT,
+    @AchievmentTypeID INT,
+    @AchievmentPoints DECIMAL(10,2),--10-vkupen broj na cifri, 2-dve decimali
+    @AchievmentMaxPoints DECIMAL(10,2),
+    @AchievmentDate DATETIME = NULL
+)
+AS
+BEGIN
+    DECLARE @ParticipationRate DECIMAL(5,2);
+    
+    IF @AchievmentDate IS NULL
+        SET @AchievmentDate = GETDATE();
+ 
+    SELECT @ParticipationRate = ParticipationRate
+    FROM AchievementType
+    WHERE ID = @AchievmentTypeID;
+    
+    IF @ParticipationRate IS NULL
+    BEGIN
+        PRINT 'Error: AchievmentType with ID ' + CAST(@AchievmentTypeID AS VARCHAR) + ' does not exist!';
+        RETURN;
+    END
+
+    INSERT INTO GradeDetails (GradeID, AchievementTypeID, AchievementPoints, AchievementMaxPoints, AchievementDate)
+    VALUES (@GradeID, @AchievmentTypeID, @AchievmentPoints, @AchievmentMaxPoints, @AchievmentDate);
+    
+    IF @@ROWCOUNT = 0
+    BEGIN
+        PRINT 'Error: Grade details were not inserted!';
+        RETURN;
+    END
+    
+    PRINT 'Grade details have been successfully added!';
+    PRINT '----------------------------------------';
+
+    -- Return SUM of grade points based on formula 
+    SELECT 
+        @GradeID AS GradeID,
+        SUM(AchievementPoints) AS TotalPoints,
+        SUM(AchievementMaxPoints) AS TotalMaxPoints,
+        CAST(SUM(AchievementPoints) * 100.0 / NULLIF(SUM(AchievementMaxPoints), 0) AS DECIMAL(5,2)) AS Percentage,
+        CAST(SUM(AchievementPoints) * @ParticipationRate / 100.0 AS DECIMAL(5,2)) AS WeightedPoints
+    FROM GradeDetails
+    WHERE GradeID = @GradeID
+    GROUP BY GradeID;
+    
+    PRINT '----------------------------------------';
+    PRINT 'Procedure CreateGradeDetail finished successfully.';
+END
+GO
+
+
+
+EXEC CreateGradeDetail 3, 5, 45.7, 50, '2026-04-28';
+
+--3  -> GradeID
+--5  -> AchievementType (Ispit)
+--45.7 -> AchievementPoints(Studentot osvoil 45.7 poeni)
+--50 -> AchievementMaxPoints(Od vkupno 50)
+--'2026-04-28'
+
+--RESULT
+--GradeID->3
+--TotalPoints->zbir na site AchievmentPoints za GradeID=3
+--TotalMaxPoints ->zbir na site AchievmentMaxPoints
+--Percentage -> osvoeni % od vkupnite poeni
+--WeightedPoints ->poeni spored tezina (ispit=80 poeni)
