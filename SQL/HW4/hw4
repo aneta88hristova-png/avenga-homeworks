@@ -92,8 +92,8 @@ BEGIN
         @GradeID AS GradeID,
         SUM(AchievementPoints) AS TotalPoints,
         SUM(AchievementMaxPoints) AS TotalMaxPoints,
-        CAST(SUM(AchievementPoints) * 100.0 / NULLIF(SUM(AchievementMaxPoints), 0) AS DECIMAL(5,2)) AS Percentage,
-        CAST(SUM(AchievementPoints) * @ParticipationRate / 100.0 AS DECIMAL(5,2)) AS WeightedPoints
+        CAST(SUM(AchievementPoints) * 100.0 / NULLIF(SUM(AchievementMaxPoints), 0) AS DECIMAL(10,2)) AS Percentage,--NULLIF se koristi za da se izbegne deljenje so nula
+        CAST(SUM(AchievementPoints) * @ParticipationRate / 100.0 AS DECIMAL(10,2)) AS WeightedPoints
     FROM GradeDetails
     WHERE GradeID = @GradeID
     GROUP BY GradeID;
