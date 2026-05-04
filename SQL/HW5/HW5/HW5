@@ -1,0 +1,143 @@
+--- Create a function that concatenates First and Last Name of a user and returns the full name.
+CREATE FUNCTION GetFullName
+
+(@user_id INT)
+
+RETURNS VARCHAR(101)
+AS
+BEGIN
+    RETURN (SELECT CONCAT(first_name, ' ', last_name) FROM Users WHERE user_id = @user_id);
+END;
+
+
+SELECT dbo.GetFullName(1) AS FullName;
+
+
+
+--  Create a view for all **undelivered pizzas** with user full names  
+CREATE OR ALTER VIEW UndeliveredPizzasView
+AS
+SELECT 
+    o.order_id,
+    CONCAT(u.first_name, ' ', u.last_name) AS user_full_name,
+    u.phone,
+    u.address,
+    o.order_date,
+    o.is_delivered,
+    COUNT(op.pizza_id) AS total_pizzas
+FROM Orders o
+JOIN Users u ON o.user_id = u.user_id
+JOIN Order_Pizza op ON o.order_id = op.order_id
+WHERE o.is_delivered = 0
+GROUP BY o.order_id, u.first_name, u.last_name, u.phone, u.address, o.order_date, o.is_delivered;
+
+
+SELECT * FROM UndeliveredPizzasView;
+
+
+
+
+
+
+-- Create a stored procedure:
+  -- Input: OrderId  
+  -- Output: Full price (Delivery + Pizzas + Toppings)  
+
+
+  CREATE OR ALTER PROCEDURE CalculateOrderPrice
+    @OrderId INT
+AS
+BEGIN
+    SELECT 
+        o.order_id,
+        o.delivery_price AS Delivery_Price,
+        ISNULL(SUM(ps.base_price * op.quantity), 0) AS Pizzas_Price,
+        ISNULL(SUM(t.price * op.quantity), 0) AS Toppings_Price,
+        o.delivery_price + ISNULL(SUM(ps.base_price * op.quantity), 0) + ISNULL(SUM(t.price * op.quantity), 0) AS Total_Price
+    FROM Orders o
+    LEFT JOIN Order_Pizza op ON o.order_id = op.order_id
+    LEFT JOIN Pizzas p ON op.pizza_id = p.pizza_id
+    LEFT JOIN Pizza_Sizes ps ON p.size_id = ps.size_id
+    LEFT JOIN Pizza_Topping pt ON p.pizza_id = pt.pizza_id
+    LEFT JOIN Toppings t ON pt.topping_id = t.topping_id
+    WHERE o.order_id = @OrderId
+    GROUP BY o.order_id, o.delivery_price;
+END;
+
+
+EXEC CalculateOrderPrice @OrderId = 6;
+
+
+
+
+-- Create a view:
+  -- Pizzas ordered by popularity (most ordered first)
+CREATE OR ALTER VIEW PizzaPopularityView
+AS
+SELECT 
+    p.pizza_id,
+    p.pizza_name,
+    ps.size_name,
+    ps.base_price,
+    COUNT(DISTINCT op.order_id) AS number_of_orders,
+    SUM(op.quantity) AS total_quantity_ordered,
+    RANK() OVER (ORDER BY SUM(op.quantity) DESC) AS popularity_rank
+FROM Pizzas p
+INNER JOIN Pizza_Sizes ps ON p.size_id = ps.size_id
+LEFT JOIN Order_Pizza op ON p.pizza_id = op.pizza_id
+GROUP BY p.pizza_id, p.pizza_name, ps.size_name, ps.base_price;
+
+
+
+SELECT * FROM PizzaPopularityView
+ORDER BY popularity_rank;
+
+
+
+-- Create a view:
+  --Toppings ordered by popularity 
+  
+CREATE OR ALTER VIEW ToppingPopularityView
+AS
+SELECT 
+    t.topping_id,
+    t.topping_name,
+    t.price,
+    COUNT(DISTINCT pt.pizza_id) AS number_of_pizzas_used_on,
+    COUNT(pt.pizza_topping_id) AS times_used,
+    SUM(op.quantity) AS total_quantity_ordered,
+    RANK() OVER (ORDER BY COUNT(pt.pizza_topping_id) DESC) AS popularity_rank
+FROM Toppings t
+LEFT JOIN Pizza_Topping pt ON t.topping_id = pt.topping_id
+LEFT JOIN Pizzas p ON pt.pizza_id = p.pizza_id
+LEFT JOIN Order_Pizza op ON p.pizza_id = op.pizza_id
+GROUP BY t.topping_id, t.topping_name, t.price;
+
+
+
+SELECT * FROM ToppingPopularityView
+ORDER BY popularity_rank;
+
+
+
+
+--Create a view:
+  -- Users and total pizzas they ordered 
+
+  CREATE OR ALTER VIEW UserPizzaTotalView
+AS
+SELECT 
+    CONCAT(u.first_name, ' ', u.last_name) AS user_name,
+    COUNT(op.order_pizza_id) AS total_pizzas_ordered,
+    COUNT(DISTINCT o.order_id) AS number_of_orders
+FROM Users u
+LEFT JOIN Orders o ON u.user_id = o.user_id
+LEFT JOIN Order_Pizza op ON o.order_id = op.order_id
+GROUP BY u.user_id, u.first_name, u.last_name;
+GO
+
+
+SELECT * FROM UserPizzaTotalView
+ORDER BY total_pizzas_ordered DESC;
+
+
