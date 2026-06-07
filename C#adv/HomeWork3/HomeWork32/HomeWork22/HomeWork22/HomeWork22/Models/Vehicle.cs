@@ -1,5 +1,4 @@
-﻿
-namespace HomeWork22.Models
+﻿namespace HomeWork22.Models
 {
     public class Vehicle
     {

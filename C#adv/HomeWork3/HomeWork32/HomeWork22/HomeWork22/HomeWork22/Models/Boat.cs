@@ -6,10 +6,5 @@
         {
             Console.WriteLine("Im a boat and i do not have wheels :(");
         }
-
-        public void Sail()
-        {
-            Console.WriteLine("Sailing");
-        }
     }
 }

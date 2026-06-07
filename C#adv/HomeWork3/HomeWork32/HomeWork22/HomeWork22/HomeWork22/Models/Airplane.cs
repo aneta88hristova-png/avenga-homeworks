@@ -6,10 +6,5 @@
         {
             Console.WriteLine("Im a plane i have couple of wheels :)");
         }
-
-        public void Fly()
-        {
-            Console.WriteLine("Flying");
-        }
     }
 }
