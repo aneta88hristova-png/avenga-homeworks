@@ -1,5 +1,4 @@
-﻿
-using HomeWork21.Models;
+﻿using HomeWork21.Models;
 using HomeWork21.Database;
 
 namespace HomeWork21
@@ -8,7 +7,8 @@ namespace HomeWork21
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("=== USER DATABASE SEARCH SYSTEM ===\n");
+            Console.WriteLine("=== USER DATABASE SEARCH SYSTEM (With Polymorphism) ===\n");
+            Console.WriteLine("Demonstrating Method Overloading - All search methods named 'Search'\n");
 
             bool running = true;
 
@@ -17,12 +17,12 @@ namespace HomeWork21
                 Console.WriteLine("\n" + new string('=', 60));
                 Console.WriteLine("MAIN MENU");
                 Console.WriteLine(new string('=', 60));
-                Console.WriteLine("1. Search by ID");
-                Console.WriteLine("2. Search by Name");
-                Console.WriteLine("3. Search by Age (exact match)");
-                Console.WriteLine("4. Search by Age Range");
-                Console.WriteLine("5. Search by Name AND Age");
-                Console.WriteLine("6. Universal Search (ID, Name, or Age)");
+                Console.WriteLine("1. Search by ID - Search(int id)");
+                Console.WriteLine("2. Search by Name - Search(string name)");
+                Console.WriteLine("3. Search by Age - Search(byte age)");
+                Console.WriteLine("4. Search by Age Range - Search(int minAge, int maxAge)");
+                Console.WriteLine("5. Search by Name AND Age - Search(string name, int age)");
+                Console.WriteLine("6. Universal Search - Search(string keyword, bool universalSearch)");
                 Console.WriteLine("7. Display All Users");
                 Console.WriteLine("8. Add New User");
                 Console.WriteLine("9. Remove User by ID");
@@ -75,10 +75,10 @@ namespace HomeWork21
         static void SearchByIdMenu()
         {
             Console.Clear();
-            Console.WriteLine("=== SEARCH BY ID ===\n");
+            Console.WriteLine("=== SEARCH BY ID (Search(int id)) ===\n");
 
             int id = GetValidInt("Enter User ID: ");
-            User user = UserDatabase.SearchById(id);
+            User user = UserDatabase.Search(id);
 
             if (user != null)
             {
@@ -97,66 +97,32 @@ namespace HomeWork21
         static void SearchByNameMenu()
         {
             Console.Clear();
-            Console.WriteLine("=== SEARCH BY NAME ===\n");
+            Console.WriteLine("=== SEARCH BY NAME (Search(string name)) ===\n");
             Console.WriteLine("(Case-insensitive, partial match allowed)\n");
 
             Console.Write("Enter Name (or part of name): ");
             string name = Console.ReadLine();
 
-            List<User> results = UserDatabase.SearchByName(name);
+            List<User> results = UserDatabase.Search(name);
 
-            Console.WriteLine("\n SEARCH RESULTS:");
-            Console.WriteLine(new string('-', 50));
-
-            if (results.Count > 0)
-            {
-                foreach (User user in results)
-                {
-                    user.DisplayInfo();
-                }
-                Console.WriteLine($"\n  Found {results.Count} user(s)");
-            }
-            else
-            {
-                Console.WriteLine("  No users found matching that name.");
-            }
-
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
+            DisplayResults(results);
         }
 
         static void SearchByAgeMenu()
         {
             Console.Clear();
-            Console.WriteLine("=== SEARCH BY AGE (EXACT MATCH) ===\n");
+            Console.WriteLine("=== SEARCH BY AGE (Search(byte age)) ===\n");
 
             int age = GetValidInt("Enter Age: ");
-            List<User> results = UserDatabase.SearchByAge(age);
+            List<User> results = UserDatabase.Search((byte)age);
 
-            Console.WriteLine("\n SEARCH RESULTS:");
-            Console.WriteLine(new string('-', 50));
-
-            if (results.Count > 0)
-            {
-                foreach (User user in results)
-                {
-                    user.DisplayInfo();
-                }
-                Console.WriteLine($"\n  Found {results.Count} user(s)");
-            }
-            else
-            {
-                Console.WriteLine($"  No users found with age: {age}");
-            }
-
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
+            DisplayResults(results, $"age {age}");
         }
 
         static void SearchByAgeRangeMenu()
         {
             Console.Clear();
-            Console.WriteLine("=== SEARCH BY AGE RANGE ===\n");
+            Console.WriteLine("=== SEARCH BY AGE RANGE (Search(int minAge, int maxAge)) ===\n");
 
             int minAge = GetValidInt("Enter Minimum Age: ");
             int maxAge = GetValidInt("Enter Maximum Age: ");
@@ -167,23 +133,8 @@ namespace HomeWork21
             }
             else
             {
-                List<User> results = UserDatabase.SearchByAgeRange(minAge, maxAge);
-
-                Console.WriteLine($"\n USERS BETWEEN AGES {minAge} AND {maxAge}:");
-                Console.WriteLine(new string('-', 50));
-
-                if (results.Count > 0)
-                {
-                    foreach (User user in results)
-                    {
-                        user.DisplayInfo();
-                    }
-                    Console.WriteLine($"\n  Found {results.Count} user(s)");
-                }
-                else
-                {
-                    Console.WriteLine($"  No users found between ages {minAge} and {maxAge}");
-                }
+                List<User> results = UserDatabase.Search(minAge, maxAge);
+                DisplayResults(results, $"ages between {minAge} and {maxAge}");
             }
 
             Console.WriteLine("\nPress any key to continue...");
@@ -193,45 +144,27 @@ namespace HomeWork21
         static void SearchByNameAndAgeMenu()
         {
             Console.Clear();
-            Console.WriteLine("=== SEARCH BY NAME AND AGE ===\n");
+            Console.WriteLine("=== SEARCH BY NAME AND AGE (Search(string name, int age)) ===\n");
 
             Console.Write("Enter Name: ");
             string name = Console.ReadLine();
             int age = GetValidInt("Enter Age: ");
 
-            List<User> results = UserDatabase.SearchByNameAndAge(name, age);
-
-            Console.WriteLine("\n SEARCH RESULTS:");
-            Console.WriteLine(new string('-', 50));
-
-            if (results.Count > 0)
-            {
-                foreach (User user in results)
-                {
-                    user.DisplayInfo();
-                }
-                Console.WriteLine($"\n  Found {results.Count} user(s)");
-            }
-            else
-            {
-                Console.WriteLine($"  No users found matching Name '{name}' and Age {age}");
-            }
-
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
+            List<User> results = UserDatabase.Search(name, age);
+            DisplayResults(results, $"Name '{name}' and Age {age}");
         }
 
         static void UniversalSearchMenu()
         {
             Console.Clear();
-            Console.WriteLine("=== UNIVERSAL SEARCH ===\n");
+            Console.WriteLine("=== UNIVERSAL SEARCH (Search(string keyword, bool universalSearch)) ===\n");
             Console.WriteLine("Search by ID, Name, or Age");
             Console.WriteLine("Examples: 'Alice', '5', '25'\n");
 
             Console.Write("Enter search keyword: ");
             string keyword = Console.ReadLine();
 
-            List<User> results = UserDatabase.Search(keyword);
+            List<User> results = UserDatabase.Search(keyword, true);
 
             Console.WriteLine("\n SEARCH RESULTS:");
             Console.WriteLine(new string('-', 50));
@@ -253,6 +186,29 @@ namespace HomeWork21
             Console.ReadKey();
         }
 
+        static void DisplayResults(List<User> results, string searchCriteria = "")
+        {
+            Console.WriteLine("\n SEARCH RESULTS:");
+            Console.WriteLine(new string('-', 50));
+
+            if (results.Count > 0)
+            {
+                foreach (User user in results)
+                {
+                    user.DisplayInfo();
+                }
+                Console.WriteLine($"\n  Found {results.Count} user(s)");
+            }
+            else
+            {
+                string criteria = string.IsNullOrEmpty(searchCriteria) ? "that criteria" : searchCriteria;
+                Console.WriteLine($"  No users found matching {criteria}");
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
+        }
+
         static void AddUserMenu()
         {
             Console.Clear();
@@ -260,8 +216,7 @@ namespace HomeWork21
 
             int id = GetValidInt("Enter User ID: ");
 
-            // Check if ID already exists
-            if (UserDatabase.SearchById(id) != null)
+            if (UserDatabase.Search(id) != null)
             {
                 Console.WriteLine($"\n User with ID {id} already exists!");
                 Console.WriteLine("\nPress any key to continue...");

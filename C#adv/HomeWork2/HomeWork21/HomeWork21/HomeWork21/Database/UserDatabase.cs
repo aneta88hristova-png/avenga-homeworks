@@ -1,16 +1,13 @@
-﻿
-using HomeWork21.Models;
+﻿using HomeWork21.Models;
 
 namespace HomeWork21.Database
 {
     public static class UserDatabase
     {
- 
         private static List<User> _users = new List<User>();
 
         static UserDatabase()
         {
-          
             _users.Add(new User(1, "Alice Johnson", 25));
             _users.Add(new User(2, "Bob Smith", 30));
             _users.Add(new User(3, "Charlie Brown", 22));
@@ -23,14 +20,12 @@ namespace HomeWork21.Database
             _users.Add(new User(10, "Julia Roberts", 45));
         }
 
-
-        public static User SearchById(int id)
+        public static User Search(int id)
         {
             return _users.FirstOrDefault(u => u.Id == id);
         }
 
-
-        public static List<User> SearchByName(string name)
+        public static List<User> Search(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
                 return new List<User>();
@@ -38,34 +33,35 @@ namespace HomeWork21.Database
             return _users.Where(u => u.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
         }
 
-        public static List<User> SearchByAge(int age)
+        public static List<User> Search(byte age)
         {
             return _users.Where(u => u.Age == age).ToList();
         }
 
-        public static List<User> SearchByAgeRange(int minAge, int maxAge)
+        public static List<User> Search(int minAge, int maxAge)
         {
             return _users.Where(u => u.Age >= minAge && u.Age <= maxAge).ToList();
         }
 
-        public static List<User> SearchByNameAndAge(string name, int age)
+        public static List<User> Search(string name, int age)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                return new List<User>();
+
             return _users.Where(u => u.Name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0 && u.Age == age).ToList();
         }
 
-        public static List<User> Search(string keyword)
+        public static List<User> Search(string keyword, bool universalSearch = true)
         {
             if (string.IsNullOrWhiteSpace(keyword))
                 return new List<User>();
 
             if (int.TryParse(keyword, out int number))
             {
-             
                 return _users.Where(u => u.Id == number || u.Age == number).ToList();
             }
             else
             {
-              
                 return _users.Where(u => u.Name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
             }
         }
@@ -75,7 +71,6 @@ namespace HomeWork21.Database
             return _users.ToList();
         }
 
-     
         public static void AddUser(User user)
         {
             if (user != null)
@@ -87,7 +82,7 @@ namespace HomeWork21.Database
 
         public static bool RemoveUser(int id)
         {
-            User user = SearchById(id);
+            User user = Search(id);
             if (user != null)
             {
                 _users.Remove(user);
