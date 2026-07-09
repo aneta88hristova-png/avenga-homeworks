@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Video Rental Store</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎬 Video Rental Store</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/Movies/Index">Movies</a>
+                <a href="/Movies/MyRentals">My Rentals</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 - Video Rental Store</p>
+        </div>
+    </footer>
+</body>
+</html>

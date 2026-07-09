@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "My Rentals";
+}
+
+<h2>My Rented Movies</h2>
+
+<p>
+    <a href="/Movies/Index">Browse Movies</a> |
+    <a href="/Home/Logout">Logout</a>
+</p>
+
+@if (ViewBag.Rentals.Count == 0)
+{
+    <p>You have no active rentals.</p>
+}
+else
+{
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Movie</th>
+                <th>Rented On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rental in ViewBag.Rentals)
+            {
+                <tr>
+                    <td>@rental.MovieTitle</td>
+                    <td>@rental.RentedOn.ToShortDateString()</td>
+                    <td>
+                        <form method="post" action="/Movies/Return">
+                            <input type="hidden" name="rentalId" value="@rental.RentalId" />
+                            <button type="submit">Return Movie</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

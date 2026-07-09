@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login to Video Rental Store</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div style="color: red; border: 1px solid red; padding: 10px;">
+        @ViewBag.Error
+    </div>
+}
+
+<form method="post" action="/Home/Login">
+    <div>
+        <label>Card Number:</label>
+        <input type="text" name="cardNumber" placeholder="1234-5678-9012" required />
+    </div>
+    <br />
+    <button type="submit">Login</button>
+</form>
+
+<hr />
+
+<h4>Test Card Numbers:</h4>
+<ul>
+    <li>Anna Andersson: <strong>1234-5678-9012</strong></li>
+    <li>Erik Eriksson: <strong>8765-4321-0987</strong></li>
+    <li>Sofia Svensson: <strong>1111-2222-3333</strong></li>
+</ul>

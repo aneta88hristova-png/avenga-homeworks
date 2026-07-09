@@ -1,0 +1,66 @@
+﻿@model VideoRentalStore.Models.Movie
+@{
+    ViewData["Title"] = "Movie Details";
+}
+
+<h2>@Model.Title</h2>
+
+<p>
+    <a href="/Movies/Index">Back to Movies</a>
+</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <td><strong>Genre:</strong></td>
+        <td>@Model.Genre</td>
+    </tr>
+    <tr>
+        <td><strong>Language:</strong></td>
+        <td>@Model.Language</td>
+    </tr>
+    <tr>
+        <td><strong>Release Date:</strong></td>
+        <td>@Model.ReleaseDate.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <td><strong>Length:</strong></td>
+        <td>@Model.Length.Hours h @Model.Length.Minutes min</td>
+    </tr>
+    <tr>
+        <td><strong>Age Restriction:</strong></td>
+        <td>@Model.AgeRestriction+</td>
+    </tr>
+    <tr>
+        <td><strong>Available Copies:</strong></td>
+        <td>
+            @if (Model.Quantity > 0)
+            {
+                @Model.Quantity
+            }
+            else
+            {
+                <span style="color: red;">Not available</span>
+            }
+        </td>
+    </tr>
+</table>
+
+<h4>Cast</h4>
+<ul>
+    @foreach (var cast in ViewBag.Cast)
+    {
+        <li>@cast.Name - @cast.Part</li>
+    }
+</ul>
+
+@if (Model.Quantity > 0)
+{
+    <form method="post" action="/Movies/Rent">
+        <input type="hidden" name="movieId" value="@Model.Id" />
+        <button type="submit">Rent This Movie</button>
+    </form>
+}
+else
+{
+    <p style="color: red;">This movie is currently not available for rent.</p>
+}

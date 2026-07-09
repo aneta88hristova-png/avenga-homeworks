@@ -1,0 +1,39 @@
+﻿@model List<VideoRentalStore.Models.Movie>
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h2>Welcome, @ViewBag.UserName!</h2>
+
+<p>
+    <a href="/Movies/MyRentals">My Rentals</a> |
+    <a href="/Home/Logout">Logout</a>
+</p>
+
+<h3>Available Movies</h3>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Language</th>
+            <th>Available</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Genre</td>
+                <td>@movie.Language</td>
+                <td>@movie.Quantity</td>
+                <td>
+                    <a href="/Movies/Details/@movie.Id">View Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
