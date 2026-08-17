@@ -1,0 +1,54 @@
+﻿@page
+@model BooksModel
+
+<h1>📚 Mina Böcker</h1>
+
+<!-- Statistik med ViewModels -->
+<div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+    <p><strong>Totalt antal böcker:</strong> @Model.Books.Count</p>
+    <p><strong>Böcker i lager:</strong> @Model.Books.Count(b => b.AvailabilityStatus.Contains("I lager"))</p>
+</div>
+
+<!-- Tabell med ViewModels -->
+<table style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr style="background: #007bff; color: white;">
+            <th style="padding: 10px; text-align: left;">ID</th>
+            <th style="padding: 10px; text-align: left;">Bok</th>
+            <th style="padding: 10px; text-align: left;">Författare</th>
+            <th style="padding: 10px; text-align: left;">År</th>
+            <th style="padding: 10px; text-align: left;">Genre</th>
+            <th style="padding: 10px; text-align: left;">Pris</th>
+            <th style="padding: 10px; text-align: left;">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model.Books)
+        {
+            <tr style="border-bottom: 1px solid #ddd;">
+                <td style="padding: 10px;">@book.Id</td>
+                <td style="padding: 10px;"><strong>@book.Title</strong></td>
+                <td style="padding: 10px;">@book.Author</td>
+                <td style="padding: 10px;">@book.YearDisplay</td>
+                <td style="padding: 10px;">@book.GenreDisplay</td>
+                <td style="padding: 10px;">@book.FormattedPrice</td>
+                <td style="padding: 10px;">@book.AvailabilityStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Detaljerad vy med DisplayText -->
+<div style="margin-top: 20px; background: #e9ecef; padding: 15px; border-radius: 8px;">
+    <h3>📖 Detaljer</h3>
+    @foreach (var book in Model.Books)
+    {
+        <div style="padding: 5px; border-bottom: 1px solid #ccc;">
+            <strong>@book.DisplayText</strong>
+            <span style="color: @(book.AvailabilityStatus.Contains("I lager") ? "green" : "red");">
+                @book.AvailabilityStatus
+            </span>
+            <span>| Pris: @book.FormattedPrice</span>
+        </div>
+    }
+</div>

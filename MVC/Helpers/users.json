@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "FirstName": "Aneta",
+    "LastName": "Hristova",
+    "Email": "aneta.hristova@hotmail.com",
+    "Password": "DonoPopov29",
+    "ConfirmPassword": "DonoPopov29"
+  },
+  {
+    "Id": 2,
+    "FirstName": "Riste",
+    "LastName": "Hristov",
+    "Email": "riste.hristov@gmail.com",
+    "Password": "9taBrigada6",
+    "ConfirmPassword": "9taBrigada6"
+  }
+]

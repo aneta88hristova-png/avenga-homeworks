@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User API - Client</title>
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+    <div class="container">
+        <h1>👥 User API - Client</h1>
+
+        <div class="card">
+            <h2>📋 1. Get All Users</h2>
+            <div class="endpoint-group">
+                <button onclick="getAllUsers()">GET /api/users</button>
+                <button onclick="clearAllResults()" style="background: #6c757d;">Clear All</button>
+            </div>
+            <div id="getAllResult" class="result">Click the button to get all users...</div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 2. Get User by Index</h2>
+            <div class="endpoint-group">
+                <input type="number" id="userIdInput" placeholder="Enter index (e.g. 0, 1, 2...)" min="0">
+                <button onclick="getUserById()">GET /api/users/{index}</button>
+            </div>
+            <div id="getByIdResult" class="result">Enter an index and click the button...</div>
+        </div>
+
+        <div class="card">
+            <h2>👤 All Users (Visual List)</h2>
+            <div id="userListContainer">
+                <ul id="userList" class="user-list">
+                    <li style="color: #6c757d; font-style: italic;">Click "Get All Users" above to display the list...</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📊 Status Log</h2>
+            <div id="statusLog" class="result" style="max-height: 200px; overflow-y: auto;">
+                Waiting for requests...
+            </div>
+            <button onclick="clearLog()" style="margin-top: 10px; padding: 5px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear Log</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = '';
+
+        function logStatus(message, isError = false, isInfo = false) {
+            const logDiv = document.getElementById('statusLog');
+            const timestamp = new Date().toLocaleTimeString();
+            let statusClass = 'status-info';
+            if (isError) statusClass = 'status-error';
+            else if (isInfo) statusClass = 'status-info';
+            else statusClass = 'status-success';
+
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `
+                    <span class="status-badge ${statusClass}">${timestamp}</span>
+                    ${message}
+                `;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function showResult(elementId, data, isError = false) {
+            const element = document.getElementById(elementId);
+            if (isError) {
+                element.className = 'result error';
+                element.textContent = data;
+            } else {
+                element.className = 'result success';
+                if (typeof data === 'string') {
+                    element.textContent = data;
+                } else {
+                    element.textContent = JSON.stringify(data, null, 2);
+                }
+            }
+        }
+
+        function clearLog() {
+            const logDiv = document.getElementById('statusLog');
+            logDiv.innerHTML = 'Log cleared...';
+            logStatus('🗑️ Log cleared', false, true);
+        }
+
+        function clearAllResults() {
+            document.getElementById('getAllResult').className = 'result';
+            document.getElementById('getAllResult').textContent = 'Results cleared...';
+            document.getElementById('getByIdResult').className = 'result';
+            document.getElementById('getByIdResult').textContent = 'Results cleared...';
+            logStatus('🗑️ All results cleared', false, true);
+        }
+
+        async function getAllUsers() {
+            const resultDiv = document.getElementById('getAllResult');
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = 'Loading users...';
+
+            try {
+                logStatus('📤 GET /api/users - Sending request...', false, true);
+
+                const response = await fetch(`${API_BASE_URL}/api/users`);
+
+                logStatus(`📥 Status: ${response.status} ${response.statusText}`);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const data = await response.json();
+                showResult('getAllResult', data);
+                logStatus(`✅ Success! Retrieved ${data.length} users`);
+
+                updateUserList(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult('getAllResult', `❌ Error: ${error.message}`, true);
+                logStatus(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        async function getUserById() {
+            const input = document.getElementById('userIdInput');
+            const index = parseInt(input.value);
+            const resultDiv = document.getElementById('getByIdResult');
+
+            if (isNaN(index) || index < 0) {
+                showResult('getByIdResult', '⚠️ Please enter a valid index (positive integer)', true);
+                logStatus('⚠️ Invalid index entered', true);
+                return;
+            }
+
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = `Loading user with index ${index}...`;
+
+            try {
+                logStatus(`📤 GET /api/users/${index} - Sending request...`, false, true);
+
+                const response = await fetch(`${API_BASE_URL}/api/users/${index}`);
+
+                logStatus(`📥 Status: ${response.status} ${response.statusText}`);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                // FIX: Använd text() istället för json() eftersom API returnerar en string
+                const data = await response.text();
+                showResult('getByIdResult', `✅ User at index ${index}: "${data}"`);
+                logStatus(`✅ Success! Found "${data}" at index ${index}`);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showResult('getByIdResult', `❌ Error: ${error.message}`, true);
+                logStatus(`❌ Error: ${error.message}`, true);
+            }
+        }
+
+        function updateUserList(users) {
+            const list = document.getElementById('userList');
+            list.innerHTML = '';
+
+            if (!users || users.length === 0) {
+                list.innerHTML = '<li style="color: #6c757d; font-style: italic;">No users found</li>';
+                return;
+            }
+
+            users.forEach((user, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                        <span>${user}</span>
+                        <span class="user-index">Index: ${index}</span>
+                    `;
+                list.appendChild(li);
+            });
+
+            logStatus(`📋 Updated visual list with ${users.length} users`, false, true);
+        }
+
+        window.onload = function () {
+            logStatus('🚀 Page loaded - API client ready');
+            logStatus(`📡 API URL: ${API_BASE_URL || 'Same server (wwwroot)'}`, false, true);
+
+            setTimeout(() => {
+                getAllUsers();
+            }, 500);
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('userIdInput');
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    getUserById();
+                }
+            });
+        });
+
+        console.log('API Client ready!');
+        console.log(`API Base URL: ${API_BASE_URL || 'Same server'}`);
+    </script>
+</body>
+</html>
